@@ -24,7 +24,7 @@ export const ApplicationsPage: React.FC = () => {
   const userApplications = isAdmin
     ? applications
     : applications.filter(
-        (a) => a.studentId === user?.id || a.studentEmail.toLowerCase() === user?.email.toLowerCase() || a.studentName === user?.name
+        (a) => a.studentId === user?.id || a.studentEmail?.toLowerCase() === user?.email?.toLowerCase() || a.studentName === user?.name
       );
 
   const filteredApplications =
@@ -39,7 +39,7 @@ export const ApplicationsPage: React.FC = () => {
       case 'Under Review':
         return 'warning';
       case 'Submitted':
-        return 'secondary';
+        return 'purple';
       case 'Rejected':
         return 'danger';
       default:
@@ -56,12 +56,13 @@ export const ApplicationsPage: React.FC = () => {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-2">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Recruitment & Application Pipeline</span>
-          </div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">
-            {isAdmin ? 'Recruiter Application Review Board' : 'My Job Applications'}
+          <Badge variant="primary" dot className="px-3 py-1 font-semibold text-xs mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Recruitment &amp; Pipeline Suite</span>
+          </Badge>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <FileCheck className="w-8 h-8 text-indigo-400" />
+            <span>{isAdmin ? 'Recruiter Application Review Board' : 'My Job Applications'}</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             {isAdmin
@@ -74,7 +75,7 @@ export const ApplicationsPage: React.FC = () => {
       {successMessage && <Alert type="success" message={successMessage} onClose={clearMessages} />}
       {error && <Alert type="error" message={error} onClose={clearMessages} />}
 
-      {/* Filter Tabs */}
+      {/* Filter Tabs Bar */}
       <div className="flex flex-wrap items-center gap-2 border-b border-slate-800/80 pb-4">
         {['All', 'Submitted', 'Under Review', 'Interviewing', 'Accepted', 'Rejected'].map((st) => {
           const isSelected = filterStatus === st;
@@ -82,9 +83,9 @@ export const ApplicationsPage: React.FC = () => {
             <button
               key={st}
               onClick={() => setFilterStatus(st)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer select-none ${
                 isSelected
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 ring-1 ring-indigo-400/40'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 border border-indigo-400/40'
                   : 'bg-slate-900/60 border border-slate-800/80 text-slate-400 hover:text-slate-200 hover:bg-slate-900'
               }`}
             >
@@ -97,7 +98,7 @@ export const ApplicationsPage: React.FC = () => {
       {/* Applications List */}
       {isLoading ? (
         <div className="py-24 text-center">
-          <Spinner size="lg" label="Loading application records..." />
+          <Spinner size="lg" label="Loading application pipeline records..." />
         </div>
       ) : filteredApplications.length === 0 ? (
         <Card className="p-16 text-center text-slate-500 border-slate-800/80 bg-slate-900/40 backdrop-blur-xl">
@@ -112,14 +113,17 @@ export const ApplicationsPage: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {filteredApplications.map((app) => (
-            <Card key={app.id} className="border-slate-800/80 bg-slate-900/60 backdrop-blur-xl hover:border-slate-700 transition shadow-xl">
+            <Card
+              key={app.id}
+              className="border-slate-800/80 bg-slate-900/70 backdrop-blur-xl hover:border-slate-700 transition shadow-xl"
+            >
               <CardContent className="p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="space-y-2 flex-1">
                   <div className="flex items-center gap-3">
-                    <Badge variant={getStatusBadgeVariant(app.status)} className="capitalize text-xs font-mono">
+                    <Badge variant={getStatusBadgeVariant(app.status)} dot className="capitalize text-xs font-mono-code">
                       {app.status}
                     </Badge>
-                    <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
+                    <span className="text-xs font-mono-code text-slate-400 flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5 text-slate-500" />
                       {new Date(app.appliedAt).toLocaleDateString()}
                     </span>
@@ -127,7 +131,7 @@ export const ApplicationsPage: React.FC = () => {
 
                   <div>
                     <h3 className="text-xl font-bold text-white tracking-tight">{app.jobTitle}</h3>
-                    <p className="text-xs font-semibold text-indigo-400 flex items-center gap-1 mt-0.5">
+                    <p className="text-xs font-semibold text-indigo-400 flex items-center gap-1.5 mt-0.5">
                       <Building2 className="w-4 h-4 text-slate-400" />
                       {app.companyName}
                     </p>
@@ -143,24 +147,38 @@ export const ApplicationsPage: React.FC = () => {
 
                 {/* Score & Action Controls */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 border-t md:border-t-0 md:border-l border-slate-800/80 pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-between md:justify-end">
-                  <div className="text-center sm:text-right">
-                    <p className="text-[10px] uppercase font-mono font-bold text-slate-400 tracking-wider">Match Score</p>
-                    <p className="text-3xl font-black text-indigo-400 font-mono">{app.matchPercent}%</p>
+                  <div className="text-left sm:text-right">
+                    <p className="text-[10px] uppercase font-mono-code font-bold text-slate-400 tracking-wider">
+                      Competency Score
+                    </p>
+                    <p className="text-3xl font-black text-indigo-400 font-mono-code">{app.matchPercent}%</p>
                   </div>
 
                   {isAdmin && (
                     <div className="space-y-1.5">
-                      <label className="block text-[10px] uppercase font-mono font-bold text-slate-400 tracking-wider">Update Status</label>
+                      <label className="block text-[10px] uppercase font-mono-code font-bold text-slate-400 tracking-wider">
+                        Update Pipeline Stage
+                      </label>
                       <select
                         value={app.status}
                         onChange={(e) => handleStatusChange(app.id, e.target.value as ApplicationStatus)}
                         className="px-3.5 py-2 bg-slate-950/80 border border-slate-800 rounded-xl text-xs font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
                       >
-                        <option value="Submitted" className="bg-slate-900 text-slate-100">Submitted</option>
-                        <option value="Under Review" className="bg-slate-900 text-slate-100">Under Review</option>
-                        <option value="Interviewing" className="bg-slate-900 text-slate-100">Interviewing</option>
-                        <option value="Accepted" className="bg-slate-900 text-slate-100">Accepted</option>
-                        <option value="Rejected" className="bg-slate-900 text-slate-100">Rejected</option>
+                        <option value="Submitted" className="bg-slate-900 text-slate-100">
+                          Submitted
+                        </option>
+                        <option value="Under Review" className="bg-slate-900 text-slate-100">
+                          Under Review
+                        </option>
+                        <option value="Interviewing" className="bg-slate-900 text-slate-100">
+                          Interviewing
+                        </option>
+                        <option value="Accepted" className="bg-slate-900 text-slate-100">
+                          Accepted
+                        </option>
+                        <option value="Rejected" className="bg-slate-900 text-slate-100">
+                          Rejected
+                        </option>
                       </select>
                     </div>
                   )}
@@ -173,4 +191,3 @@ export const ApplicationsPage: React.FC = () => {
     </div>
   );
 };
-
