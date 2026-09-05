@@ -10,6 +10,7 @@ import {
   removeStudentSkill,
 } from '../controllers/studentController.js';
 import { protect } from '../middleware/authMiddleware.js';
+import skillGapRoutes from './skillGapRoutes.js';
 
 const router = Router();
 
@@ -28,5 +29,8 @@ router.route('/:id/skills')
   .post(protect, addOrUpdateStudentSkill);
 
 router.delete('/:id/skills/:skillId', protect, removeStudentSkill);
+
+// Skill Gap Sub-Routes: /api/students/:studentId/jobs/:jobId/skill-gap & recommendations
+router.use('/', skillGapRoutes);
 
 export default router;
