@@ -10,6 +10,7 @@ import studentRoutes from './routes/studentRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
 import applicationRoutes from './routes/applicationRoutes.js';
 import seedRoutes from './routes/seedRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -37,6 +38,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/seed', seedRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
