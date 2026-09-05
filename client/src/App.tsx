@@ -12,6 +12,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { JobsPage } from './pages/JobsPage';
 import { SkillGapPage } from './pages/SkillGapPage';
 import { ApplicationsPage } from './pages/ApplicationsPage';
+import { SkillsPage } from './pages/SkillsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,6 +45,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/skills" element={<SkillsPage />} />
               <Route path="/jobs" element={<JobsPage />} />
               <Route path="/skill-gap" element={<SkillGapPage />} />
               <Route path="/applications" element={<ApplicationsPage />} />
