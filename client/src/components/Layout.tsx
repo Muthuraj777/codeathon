@@ -13,6 +13,7 @@ import {
   X,
   GraduationCap,
   ChevronDown,
+  Code2,
 } from 'lucide-react';
 
 export const Layout: React.FC = () => {
@@ -29,6 +30,7 @@ export const Layout: React.FC = () => {
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', icon: BarChart3 },
     { label: 'Employee Profile', path: '/profile', icon: User },
+    { label: 'Skills Catalog', path: '/skills', icon: Code2 },
     { label: 'Jobs', path: '/jobs', icon: Briefcase },
     { label: 'Skill Gap Analyzer', path: '/skill-gap', icon: Target },
     { label: 'Applications', path: '/applications', icon: FileCheck },
