@@ -1,37 +1,42 @@
 import { Request, Response, NextFunction } from 'express';
+import { z } from 'zod';
 import { SkillGapService } from '../services/SkillGapService.js';
 
-export const getSkillGapAnalysis = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const studentId = String(req.params.studentId);
-    const jobId = String(req.params.jobId);
-    const result = await SkillGapService.analyzeSkillGap(studentId, jobId);
-
-    res.status(200).json({
-      status: 'success',
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const getRecommendations = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const studentId = String(req.params.studentId);
-    const jobId = String(req.params.jobId);
-    const result = await SkillGapService.getRecommendations(studentId, jobId);
-
-    res.status(200).json({
-      status: 'success',
-      data: { recommendations: result },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+export const skillGapParamSchema = z.object({
+  studentId: z.string().min(1, 'studentId is required'),
+  jobId: z.string().min(1, 'jobId is required'),
+});
 
 export class SkillGapController {
-  public static getSkillGap = getSkillGapAnalysis;
-  public static getRecommendations = getRecommendations;
+  public static async getSkillGap(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const studentId = String(req.params.studentId);
+      const jobId = String(req.params.jobId);
+      const result = await SkillGapService.analyzeSkillGap(studentId, jobId);
+
+      res.status(200).json({
+        status: 'success',
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public static async getRecommendations(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const studentId = String(req.params.studentId);
+      const jobId = String(req.params.jobId);
+      const result = await SkillGapService.getRecommendations(studentId, jobId);
+
+      res.status(200).json({
+        status: 'success',
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
