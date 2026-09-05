@@ -8,7 +8,7 @@ import { AuthRequest } from '../middleware/authMiddleware.js';
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
 
 const generateToken = (userId: string): string => {
-  const secret = process.env.JWT_SECRET || 'skill_gap_analyzer_jwt_secret_key_2026_production_ready';
+  const secret = process.env.JWT_SECRET as string;
   return jwt.sign({ id: userId }, secret, { expiresIn: '7d' });
 };
 

@@ -21,7 +21,7 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
       return;
     }
 
-    const secret = process.env.JWT_SECRET || 'skill_gap_analyzer_jwt_secret_key_2026_production_ready';
+    const secret = process.env.JWT_SECRET as string;
     const decoded = jwt.verify(token, secret) as { id: string };
 
     const user = await User.findById(decoded.id);
