@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSkillGapStore } from '../stores/useSkillGapStore';
 import { MatchGauge } from '../components/skillGap/MatchGauge';
 import { SkillGapTable } from '../components/skillGap/SkillGapTable';
 import { RecommendationCard } from '../components/skillGap/RecommendationCard';
+import { ApplyJobModal } from '../components/applications/ApplyJobModal';
 import { Spinner } from '../components/ui/Spinner';
 import { Alert } from '../components/ui/Alert';
 import { Button } from '../components/ui/Button';
@@ -24,6 +25,8 @@ export const SkillGapPage: React.FC = () => {
     runAnalysis,
   } = useSkillGapStore();
 
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+
   useEffect(() => {
     loadData();
   }, [loadData]);
@@ -35,6 +38,12 @@ export const SkillGapPage: React.FC = () => {
       </div>
     );
   }
+
+  const selectedJob = jobs.find((j) => j.id === selectedJobId) || {
+    id: selectedJobId,
+    title: analysisResult?.jobTitle || 'Java Full Stack Developer',
+    company: 'ABC Technologies',
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
@@ -121,11 +130,18 @@ export const SkillGapPage: React.FC = () => {
               <Download className="w-4 h-4 mr-2" />
               Download Analysis Report (PDF)
             </Button>
-            <Button variant="primary" size="md">
+            <Button variant="primary" size="md" onClick={() => setIsApplyModalOpen(true)}>
               <Send className="w-4 h-4 mr-2" />
               Submit Application ({analysisResult.overallMatchScore}% Match)
             </Button>
           </div>
+
+          <ApplyJobModal
+            isOpen={isApplyModalOpen}
+            onClose={() => setIsApplyModalOpen(false)}
+            job={selectedJob}
+            matchPercent={analysisResult.overallMatchScore}
+          />
         </>
       )}
     </div>

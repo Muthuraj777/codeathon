@@ -7,6 +7,7 @@ import {
   User,
   Briefcase,
   Target,
+  FileCheck,
   LogOut,
   Menu,
   X,
@@ -30,6 +31,7 @@ export const Layout: React.FC = () => {
     { label: 'Employee Profile', path: '/profile', icon: User },
     { label: 'Jobs', path: '/jobs', icon: Briefcase },
     { label: 'Skill Gap Analyzer', path: '/skill-gap', icon: Target },
+    { label: 'Applications', path: '/applications', icon: FileCheck },
   ];
 
   const getRoleBadgeVariant = (role?: string) => {
@@ -73,7 +75,7 @@ export const Layout: React.FC = () => {
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition duration-150 ${
+                    `flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition duration-150 ${
                       isActive
                         ? 'bg-indigo-600 text-white shadow-sm'
                         : 'text-slate-300 hover:bg-slate-800 hover:text-white'
@@ -169,7 +171,7 @@ export const Layout: React.FC = () => {
 
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:bg-slate-800 transition mt-4"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:bg-slate-800 transition mt-4 cursor-pointer"
             >
               <LogOut className="w-5 h-5" />
               Sign Out
