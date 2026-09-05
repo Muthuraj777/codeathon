@@ -90,12 +90,14 @@ export const googleAuth = async (req: Request, res: Response, next: NextFunction
 
     let payload: { email?: string; name?: string; sub?: string; picture?: string } | undefined;
 
+    const cleanGoogleClientId = (process.env.GOOGLE_CLIENT_ID || '1037970145497-fs1i7gvdm8gl6iffa2161ed2dnmsrp54.apps.googleusercontent.com').replace(/^["']|["']$/g, '').trim();
+
     // 1. Try official Google verifyIdToken
-    if (process.env.GOOGLE_CLIENT_ID) {
+    if (cleanGoogleClientId) {
       try {
         const ticket = await googleClient.verifyIdToken({
           idToken: credential,
-          audience: process.env.GOOGLE_CLIENT_ID,
+          audience: cleanGoogleClientId,
         });
         payload = ticket.getPayload();
       } catch (gErr) {

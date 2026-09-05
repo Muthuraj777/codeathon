@@ -30,6 +30,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await authApi.login(credentials);
       if (response.status === 'success' && response.data?.user) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         set({
           user: response.data.user,
           isAuthenticated: true,
@@ -40,6 +43,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
       throw new Error('Login failed: Invalid server response');
     } catch (err: any) {
+      localStorage.removeItem('token');
       set({
         error: err.message || 'Failed to login',
         isLoading: false,
@@ -55,6 +59,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await authApi.register(data);
       if (response.status === 'success' && response.data?.user) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         set({
           user: response.data.user,
           isAuthenticated: true,
@@ -65,6 +72,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
       throw new Error('Registration failed');
     } catch (err: any) {
+      localStorage.removeItem('token');
       set({
         error: err.message || 'Failed to register account',
         isLoading: false,
@@ -80,6 +88,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await authApi.googleLogin(credential);
       if (response.status === 'success' && response.data?.user) {
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         set({
           user: response.data.user,
           isAuthenticated: true,
@@ -90,6 +101,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
       throw new Error('Google Authentication failed');
     } catch (err: any) {
+      localStorage.removeItem('token');
       set({
         error: err.message || 'Google Login failed',
         isLoading: false,
@@ -105,6 +117,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (err) {
       console.warn('Logout API failed, clearing local state anyway', err);
     } finally {
+      localStorage.removeItem('token');
       set({
         user: null,
         isAuthenticated: false,
@@ -116,6 +129,17 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   checkAuth: async () => {
     set({ isLoading: true });
+    const token = localStorage.getItem('token');
+    if (!token) {
+      set({
+        user: null,
+        isAuthenticated: false,
+        isInitialized: true,
+        isLoading: false,
+      });
+      return;
+    }
+
     try {
       const response = await authApi.getMe();
       if (response.status === 'success' && response.data?.user) {
@@ -126,6 +150,7 @@ export const useAuthStore = create<AuthState>((set) => ({
           isLoading: false,
         });
       } else {
+        localStorage.removeItem('token');
         set({
           user: null,
           isAuthenticated: false,
@@ -134,6 +159,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         });
       }
     } catch {
+      localStorage.removeItem('token');
       set({
         user: null,
         isAuthenticated: false,
