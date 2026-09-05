@@ -44,6 +44,9 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         console.info('Google sign-in popup closed by user.');
       } else if (err?.code === 'auth/cancelled-popup-request') {
         console.info('Google sign-in popup cancelled.');
+      } else if (err?.code === 'auth/configuration-not-found') {
+        console.error('Firebase Auth Error: Google Sign-in provider is not enabled in your Firebase Console.');
+        setErrorMsg('Google Sign-In is not enabled in Firebase Console (Authentication > Sign-in method).');
       } else {
         console.error('Firebase Google Auth error:', err);
         setErrorMsg('Failed to sign in with Google. Please try again.');
