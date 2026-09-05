@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { auth, googleProvider } from '../../config/firebase';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useNavigate } from 'react-router-dom';
@@ -45,11 +45,18 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       } else if (err?.code === 'auth/cancelled-popup-request') {
         console.info('Google sign-in popup cancelled.');
       } else if (err?.code === 'auth/configuration-not-found') {
-        console.error('Firebase Auth Error: Google Sign-in provider is not enabled in your Firebase Console.');
-        setErrorMsg('Google Sign-In is not enabled in Firebase Console (Authentication > Sign-in method).');
+        console.error('Firebase Auth Error: Google Sign-in provider is not enabled in Firebase Console.');
+        setErrorMsg('Google Sign-In is not enabled under Firebase Console > Authentication > Sign-in method.');
+      } else if (err?.code === 'auth/popup-blocked') {
+        // Fallback to redirect if popup is blocked by COOP or browser extension
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectErr) {
+          setErrorMsg('Popup was blocked by browser extension. Please allow popups or use demo login.');
+        }
       } else {
         console.error('Firebase Google Auth error:', err);
-        setErrorMsg('Failed to sign in with Google. Please try again.');
+        setErrorMsg('Google Sign-In error. Ensure Google provider is enabled in Firebase Console.');
       }
     } finally {
       setIsFirebaseLoading(false);
@@ -86,7 +93,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         {label}
       </Button>
 
-      {errorMsg && <p className="text-red-500 text-xs mt-1 text-center">{errorMsg}</p>}
+      {errorMsg && <p className="text-rose-400 text-xs mt-1.5 text-center font-medium">{errorMsg}</p>}
     </div>
   );
 };
