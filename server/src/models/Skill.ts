@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface ISkill extends Document {
+  skill_id?: string;
   name: string;
   category: string;
   description?: string;
@@ -10,6 +11,12 @@ export interface ISkill extends Document {
 
 const SkillSchema = new Schema<ISkill>(
   {
+    skill_id: {
+      type: String,
+      sparse: true,
+      index: true,
+      trim: true,
+    },
     name: {
       type: String,
       required: [true, 'Skill name is required'],
@@ -24,7 +31,7 @@ const SkillSchema = new Schema<ISkill>(
       required: [true, 'Skill category is required'],
       trim: true,
       enum: {
-        values: ['Backend', 'Frontend', 'Database', 'Cloud', 'DevOps', 'Mobile', 'AI/ML', 'Other'],
+        values: ['Backend', 'Frontend', 'Database', 'Cloud', 'DevOps', 'Mobile', 'AI/ML', 'Other', 'General'],
         message: '{VALUE} is not a supported category',
       },
       default: 'Other',

@@ -22,9 +22,10 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
     return;
   }
 
-  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
+  const statusCode = err.statusCode || (res.statusCode !== 200 ? res.statusCode : 500);
   res.status(statusCode).json({
-    status: 'error',
+    success: false,
+    status: statusCode >= 500 ? 'error' : 'fail',
     message: err.message || 'Internal Server Error',
   });
 };
