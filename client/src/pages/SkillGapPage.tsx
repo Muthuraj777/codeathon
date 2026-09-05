@@ -48,7 +48,7 @@ export const SkillGapPage: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in max-w-7xl mx-auto">
       {/* Header Banner */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs mb-2">
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
@@ -77,9 +77,8 @@ export const SkillGapPage: React.FC = () => {
 
       {error && <Alert type="error" message={error} />}
 
-      {/* Interactive Candidate & Job Selector Bento Panel */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-8 glass-bento rounded-3xl">
-        {/* Student/Candidate Dropdown */}
+      {/* Candidate & Job Selector Bento Toolbar */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-7 glass-bento rounded-3xl">
         <div className="space-y-2">
           <label className="block text-xs font-medium text-zinc-300 uppercase tracking-wider flex items-center gap-2">
             <User className="w-4 h-4 text-indigo-400" />
@@ -98,7 +97,6 @@ export const SkillGapPage: React.FC = () => {
           </select>
         </div>
 
-        {/* Job Dropdown */}
         <div className="space-y-2">
           <label className="block text-xs font-medium text-zinc-300 uppercase tracking-wider flex items-center gap-2">
             <Briefcase className="w-4 h-4 text-purple-400" />
@@ -118,36 +116,55 @@ export const SkillGapPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Dynamic Match Score Gauge & Matrix */}
+      {/* Asymmetrical Bento Grid Results View */}
       {analysisResult && (
         <>
-          <MatchGauge
-            score={analysisResult.overallMatchScore}
-            matchedCount={analysisResult.matchedCount}
-            totalCount={analysisResult.totalSkillsCount}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            {/* SVG Ring Match Gauge Bento Card (Span 4) */}
+            <div className="lg:col-span-4">
+              <MatchGauge
+                score={analysisResult.overallMatchScore}
+                matchedCount={analysisResult.matchedCount}
+                totalCount={analysisResult.totalSkillsCount}
+              />
+            </div>
 
-          {/* Skill Gap Comparison Table */}
-          <SkillGapTable items={analysisResult.skillGaps} />
+            {/* Competency Gap Comparison Table Bento Card (Span 8) */}
+            <div className="lg:col-span-8">
+              <SkillGapTable items={analysisResult.skillGaps} />
+            </div>
+          </div>
 
-          {/* Prioritized Recommendations */}
+          {/* Upskilling Roadmap Bento Card (Full Width) */}
           <RecommendationCard recommendations={analysisResult.recommendations} />
 
-          {/* Action Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-end gap-3 p-6 glass-bento rounded-3xl">
-            <Button variant="outline" size="md" className="w-full sm:w-auto gap-2 border-zinc-800">
-              <Download className="w-4 h-4 text-indigo-400" />
-              <span>Download Gap Report (PDF)</span>
-            </Button>
-            <Button
-              variant="glow"
-              size="md"
-              onClick={() => setIsApplyModalOpen(true)}
-              className="w-full sm:w-auto gap-2"
-            >
-              <Send className="w-4 h-4" />
-              <span>Submit Application ({analysisResult.overallMatchScore}% Match)</span>
-            </Button>
+          {/* Bottom Action Bar Bento Card */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 glass-bento rounded-3xl">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-semibold text-zinc-100">Assessment Ready</h4>
+                <p className="text-[11px] text-zinc-400">Calculated overall candidate match score of {analysisResult.overallMatchScore}%.</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <Button variant="outline" size="md" className="w-full sm:w-auto gap-2 border-zinc-800">
+                <Download className="w-4 h-4 text-indigo-400" />
+                <span>Export PDF</span>
+              </Button>
+              <Button
+                variant="glow"
+                size="md"
+                onClick={() => setIsApplyModalOpen(true)}
+                className="w-full sm:w-auto gap-2"
+              >
+                <Send className="w-4 h-4" />
+                <span>Submit Application ({analysisResult.overallMatchScore}%)</span>
+              </Button>
+            </div>
           </div>
 
           <ApplyJobModal

@@ -19,6 +19,7 @@ import {
   Search,
   Bell,
   CheckCircle2,
+  Zap,
 } from 'lucide-react';
 
 export const Layout: React.FC = () => {
@@ -57,13 +58,13 @@ export const Layout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col relative selection:bg-indigo-500/30 selection:text-indigo-200">
-      {/* Background Ambient Glow Effects */}
-      <div className="fixed top-0 left-1/4 w-[600px] h-[600px] bg-blob-indigo pointer-events-none z-0 opacity-60" />
-      <div className="fixed top-1/3 right-10 w-[500px] h-[500px] bg-blob-purple pointer-events-none z-0 opacity-40" />
-      <div className="fixed bottom-10 left-10 w-[400px] h-[400px] bg-blob-cyan pointer-events-none z-0 opacity-30" />
+      {/* Ambient Mesh Background Blobs */}
+      <div className="fixed top-0 left-1/4 w-[650px] h-[650px] bg-blob-indigo pointer-events-none z-0 opacity-70 animate-pulse-glow" />
+      <div className="fixed top-1/3 right-10 w-[550px] h-[550px] bg-blob-purple pointer-events-none z-0 opacity-50" />
+      <div className="fixed bottom-10 left-10 w-[450px] h-[450px] bg-blob-cyan pointer-events-none z-0 opacity-40" />
 
-      {/* Floating 21st.dev Glass Navigation Header */}
-      <header className="sticky top-0 z-40 bg-[#09090b]/80 backdrop-blur-xl border-b border-zinc-800/70 shadow-xl shadow-black/40">
+      {/* 21st.dev Floating Glass Header Navbar */}
+      <header className="sticky top-0 z-40 bg-[#09090b]/80 backdrop-blur-2xl border-b border-zinc-800/80 shadow-2xl shadow-black/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Brand Logo & SaaS Badge */}
@@ -71,32 +72,32 @@ export const Layout: React.FC = () => {
               onClick={() => navigate('/dashboard')}
               className="flex items-center gap-3 cursor-pointer group select-none"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 group-hover:shadow-indigo-500/30 transition duration-200 border border-white/20">
-                <GraduationCap className="w-4.5 h-4.5" />
+              <div className="w-9.5 h-9.5 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 group-hover:scale-105 group-hover:shadow-indigo-500/35 transition duration-200 border border-white/20">
+                <GraduationCap className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-sm sm:text-base tracking-tight text-white group-hover:text-indigo-200 transition">
                     Skill Gap Analyzer
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono-code">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-mono">
                     <Sparkles className="w-2.5 h-2.5 text-indigo-400" /> PRO v2.4
                   </span>
                 </div>
                 <span className="text-[10px] text-zinc-400 font-medium tracking-wider uppercase flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3 text-emerald-400" /> Competency Platform
+                  <ShieldCheck className="w-3 h-3 text-emerald-400" /> Enterprise Competency Suite
                 </span>
               </div>
             </div>
 
-            {/* Desktop Navigation Bar */}
-            <nav className="hidden lg:flex items-center space-x-1">
+            {/* Desktop Navigation Pills */}
+            <nav className="hidden lg:flex items-center space-x-1 bg-zinc-900/60 p-1.5 rounded-2xl border border-zinc-800/80 backdrop-blur-md">
               {navItems.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium transition duration-200 select-none ${
+                    `flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium transition duration-200 select-none ${
                       isActive
                         ? 'bg-zinc-800 text-white shadow-sm border border-zinc-700/80 font-semibold'
                         : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200'
@@ -111,23 +112,23 @@ export const Layout: React.FC = () => {
 
             {/* Header Right Actions */}
             <div className="hidden lg:flex items-center gap-3">
-              {/* Quick Search Shortcut Trigger */}
+              {/* Quick Search Trigger */}
               <div
                 onClick={() => navigate('/skills')}
-                className="hidden xl:flex items-center gap-2 px-3 py-1.5 bg-zinc-900/80 border border-zinc-800 rounded-xl text-xs text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 transition cursor-pointer"
+                className="hidden xl:flex items-center gap-2 px-3 py-1.5 bg-zinc-900/90 border border-zinc-800 rounded-xl text-xs text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 transition cursor-pointer shadow-inner"
               >
                 <Search className="w-3.5 h-3.5" />
-                <span>Search catalog...</span>
+                <span>Search skills catalog...</span>
                 <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-zinc-950 rounded border border-zinc-800 text-zinc-500">
                   ⌘K
                 </kbd>
               </div>
 
-              {/* Notification Bell */}
+              {/* Notification Popover Bell */}
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 rounded-xl bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800/80 transition cursor-pointer relative"
+                  className="p-2 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800/80 transition cursor-pointer relative"
                   title="Notifications"
                 >
                   <Bell className="w-4 h-4" />
@@ -135,21 +136,28 @@ export const Layout: React.FC = () => {
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 mt-2 w-80 bg-zinc-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-zinc-800 p-4 text-zinc-100 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="absolute right-0 mt-2 w-80 bg-zinc-900/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-zinc-800 p-4 text-zinc-100 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                     <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-3">
                       <h4 className="text-xs font-semibold text-white flex items-center gap-2">
-                        <Bell className="w-4 h-4 text-indigo-400" /> Notifications
+                        <Bell className="w-4 h-4 text-indigo-400" /> System Activity
                       </h4>
                       <span className="text-[10px] text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full font-mono">
-                        Real-time
+                        Live Stream
                       </span>
                     </div>
-                    <div className="space-y-3 text-xs">
+                    <div className="space-y-2.5 text-xs">
                       <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-zinc-950/80 border border-zinc-800/80">
                         <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-medium text-zinc-200">Competency Model Ready</p>
-                          <p className="text-[11px] text-zinc-400">Match engine updated for target engineering roles.</p>
+                          <p className="font-semibold text-zinc-200">Competency Engine Synced</p>
+                          <p className="text-[11px] text-zinc-400">Match accuracy score updated for engineering target benchmarks.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-zinc-950/80 border border-zinc-800/80">
+                        <Zap className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-semibold text-zinc-200">New Skill Gap Report</p>
+                          <p className="text-[11px] text-zinc-400">Generated for Java Full Stack Developer role.</p>
                         </div>
                       </div>
                     </div>
@@ -157,13 +165,13 @@ export const Layout: React.FC = () => {
                 )}
               </div>
 
-              {/* User Dropdown Menu */}
+              {/* User Profile Pill Menu */}
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   className="flex items-center gap-2.5 p-1.5 pr-3 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/80 transition focus:outline-none cursor-pointer"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex items-center justify-center font-bold text-xs uppercase shadow-inner ring-1 ring-white/20">
+                  <div className="w-7.5 h-7.5 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex items-center justify-center font-bold text-xs uppercase shadow-inner ring-1 ring-white/20">
                     {user?.name ? user.name.charAt(0) : 'U'}
                   </div>
                   <div className="text-left leading-tight hidden xl:block">
@@ -177,7 +185,7 @@ export const Layout: React.FC = () => {
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-zinc-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-zinc-800 p-2 text-zinc-100 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="absolute right-0 mt-2 w-64 bg-zinc-900/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-zinc-800 p-2 text-zinc-100 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                     <div className="px-3 py-3 border-b border-zinc-800/80 mb-1 space-y-1">
                       <p className="text-xs font-semibold text-white">{user?.name}</p>
                       <p className="text-[11px] text-zinc-400 truncate">{user?.email}</p>
@@ -209,7 +217,7 @@ export const Layout: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile Menu Toggle Button */}
+            {/* Mobile Drawer Button */}
             <div className="flex lg:hidden items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -221,9 +229,9 @@ export const Layout: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Drawer Menu */}
+        {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-zinc-800/80 bg-zinc-950/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top duration-200">
+          <div className="lg:hidden border-t border-zinc-800/80 bg-zinc-950/95 backdrop-blur-2xl px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top duration-200">
             <div className="flex items-center justify-between py-3 border-b border-zinc-800/80 mb-2">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs uppercase">
