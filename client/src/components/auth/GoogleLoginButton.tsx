@@ -32,7 +32,8 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   const [scriptLoaded, setScriptLoaded] = useState(() => typeof window !== 'undefined' && !!window.google?.accounts);
   const [isGsiActive, setIsGsiActive] = useState(false);
 
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const rawClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const googleClientId = rawClientId ? String(rawClientId).replace(/^["']|["']$/g, '').trim() : '';
 
   const handleCredentialResponse = useCallback(
     async (response: any) => {
@@ -132,6 +133,22 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     }
   };
 
+  const handleButtonClick = () => {
+    if (window.google?.accounts?.id && googleClientId) {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: handleCredentialResponse,
+        });
+        window.google.accounts.id.prompt();
+        return;
+      } catch (e) {
+        console.warn('Google GSI prompt failed:', e);
+      }
+    }
+    handleCustomGoogleLogin();
+  };
+
   return (
     <div className="w-full flex justify-center">
       {/* Official Google GSI Button Container */}
@@ -143,7 +160,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           type="button"
           variant="outline"
           className="w-full bg-white text-slate-700 hover:bg-slate-50 border-slate-300 font-semibold text-xs h-10 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-          onClick={handleCustomGoogleLogin}
+          onClick={handleButtonClick}
           isLoading={isLoading}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
