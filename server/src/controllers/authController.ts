@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { OAuth2Client } from 'google-auth-library';
 import { User, IUser } from '../models/User.js';
 import { registerSchema, loginSchema, googleAuthSchema } from '../validations/authValidation.js';
 import { AuthRequest } from '../middleware/authMiddleware.js';
-
-const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+import { verifyFirebaseToken } from '../config/firebaseAdmin.js';
 
 const generateToken = (userId: string): string => {
   const secret = process.env.JWT_SECRET || 'skill_gap_analyzer_jwt_secret_key_2026_production_ready';
@@ -90,17 +88,15 @@ export const googleAuth = async (req: Request, res: Response, next: NextFunction
 
     let payload: { email?: string; name?: string; sub?: string; picture?: string } | undefined;
 
-    // 1. Try official Google verifyIdToken
-    if (process.env.GOOGLE_CLIENT_ID) {
-      try {
-        const ticket = await googleClient.verifyIdToken({
-          idToken: credential,
-          audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        payload = ticket.getPayload();
-      } catch (gErr) {
-        // Fallthrough to decoded token parsing
-      }
+    // 1. Primary: Verify Firebase ID Token via Firebase Admin SDK
+    const firebaseDecoded = await verifyFirebaseToken(credential);
+    if (firebaseDecoded && firebaseDecoded.email) {
+      payload = {
+        email: firebaseDecoded.email,
+        name: firebaseDecoded.name || firebaseDecoded.email.split('@')[0],
+        sub: firebaseDecoded.uid,
+        picture: firebaseDecoded.picture || '',
+      };
     }
 
     // 2. Fallback: Parse decoded JWT or token payload

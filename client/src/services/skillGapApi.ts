@@ -142,10 +142,21 @@ export function calculateSkillGap(student: Student, job: Job): SkillGapResponse[
   };
 }
 
+const getAuthHeaders = () => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+};
+
 export const skillGapApi = {
   getStudents: async (): Promise<Student[]> => {
     try {
-      const res = await fetch(`${API_BASE_URL}/students`, { credentials: 'include' });
+      const res = await fetch(`${API_BASE_URL}/students`, {
+        headers: getAuthHeaders(),
+        credentials: 'include',
+      });
       if (!res.ok) throw new Error();
       const data = await res.json();
       return data.data || data;
@@ -156,7 +167,10 @@ export const skillGapApi = {
 
   getJobs: async (): Promise<Job[]> => {
     try {
-      const res = await fetch(`${API_BASE_URL}/jobs`, { credentials: 'include' });
+      const res = await fetch(`${API_BASE_URL}/jobs`, {
+        headers: getAuthHeaders(),
+        credentials: 'include',
+      });
       if (!res.ok) throw new Error();
       const data = await res.json();
       return data.data || data;
@@ -168,6 +182,7 @@ export const skillGapApi = {
   getSkillGap: async (studentId: string, jobId: string): Promise<SkillGapResponse['data']> => {
     try {
       const res = await fetch(`${API_BASE_URL}/students/${studentId}/jobs/${jobId}/skill-gap`, {
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
       if (!res.ok) throw new Error();
@@ -183,6 +198,7 @@ export const skillGapApi = {
   getRecommendations: async (studentId: string, jobId: string): Promise<RecommendationItem[]> => {
     try {
       const res = await fetch(`${API_BASE_URL}/students/${studentId}/jobs/${jobId}/recommendations`, {
+        headers: getAuthHeaders(),
         credentials: 'include',
       });
       if (!res.ok) throw new Error();

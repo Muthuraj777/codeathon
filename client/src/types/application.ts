@@ -14,10 +14,14 @@ export interface Application {
 }
 
 export interface DashboardStats {
-  totalEmployees: number; // e.g. 250
-  totalJobs: number; // e.g. 45
-  totalApplications: number; // e.g. 120
-  averageMatchPercent: number; // e.g. 74%
+  totalEmployees: number;
+  totalJobs: number;
+  totalApplications: number;
+  averageMatchPercent: number;
+  employeesMeta?: string;
+  jobsMeta?: string;
+  applicationsMeta?: string;
+  matchMeta?: string;
   topSkillGaps: Array<{
     skillName: string;
     gapCount: number;
@@ -25,3 +29,4 @@ export interface DashboardStats {
     category: string;
   }>;
 }
+

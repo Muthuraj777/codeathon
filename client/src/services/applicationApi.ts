@@ -41,10 +41,21 @@ export const MOCK_APPLICATIONS: Application[] = [
   },
 ];
 
+const getAuthHeaders = () => {
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+};
+
 export const applicationApi = {
   getApplications: async (): Promise<Application[]> => {
     try {
-      const res = await fetch(`${API_BASE_URL}/applications`, { credentials: 'include' });
+      const res = await fetch(`${API_BASE_URL}/applications`, {
+        headers: getAuthHeaders(),
+        credentials: 'include',
+      });
       if (!res.ok) throw new Error();
       const data = await res.json();
       return data.data || data;
@@ -65,7 +76,7 @@ export const applicationApi = {
     try {
       const res = await fetch(`${API_BASE_URL}/applications`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         credentials: 'include',
         body: JSON.stringify(payload),
       });
@@ -88,7 +99,7 @@ export const applicationApi = {
     try {
       const res = await fetch(`${API_BASE_URL}/applications/${applicationId}/status`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         credentials: 'include',
         body: JSON.stringify({ status }),
       });

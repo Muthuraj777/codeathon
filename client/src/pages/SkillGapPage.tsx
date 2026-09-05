@@ -7,8 +7,7 @@ import { ApplyJobModal } from '../components/applications/ApplyJobModal';
 import { Spinner } from '../components/ui/Spinner';
 import { Alert } from '../components/ui/Alert';
 import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
-import { User, Briefcase, RefreshCw, Send, Download } from 'lucide-react';
+import { User, Briefcase, RefreshCw, Send, Download, Sparkles } from 'lucide-react';
 
 export const SkillGapPage: React.FC = () => {
   const {
@@ -46,43 +45,44 @@ export const SkillGapPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-200">
+    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto">
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <Badge variant="primary" className="mb-1">
-            Skill Gap Engine & Recommendations
-          </Badge>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-2">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI Competency Gap Engine</span>
+          </div>
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">
             Competency Gap Analysis
           </h1>
-          <p className="text-sm text-slate-500">
-            Select a candidate profile and target job role to calculate real-time proficiency gaps
+          <p className="text-sm text-slate-400 mt-1">
+            Select a candidate profile and target job role to calculate real-time proficiency gaps and match metrics.
           </p>
         </div>
 
-        <Button variant="outline" size="sm" onClick={() => runAnalysis()} isLoading={isLoading}>
-          <RefreshCw className="w-4 h-4 mr-1.5" /> Recalculate
+        <Button variant="outline" size="sm" onClick={() => runAnalysis()} isLoading={isLoading} className="border-slate-800 bg-slate-900/60 text-slate-200 hover:bg-slate-800">
+          <RefreshCw className="w-4 h-4 mr-1.5 text-indigo-400" /> Recalculate Matrix
         </Button>
       </div>
 
       {error && <Alert type="error" message={error} />}
 
       {/* Interactive Candidate & Job Selector Panel */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-6 bg-slate-900/60 rounded-3xl border border-slate-800/80 backdrop-blur-xl shadow-2xl">
         {/* Student/Candidate Dropdown */}
-        <div className="space-y-1.5">
-          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <User className="w-4 h-4 text-indigo-600" />
+        <div className="space-y-2">
+          <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+            <User className="w-4 h-4 text-indigo-400" />
             Select Employee / Student Candidate
           </label>
           <select
             value={selectedStudentId}
             onChange={(e) => setSelectedStudentId(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:bg-white transition cursor-pointer"
+            className="w-full px-4 py-3 bg-slate-950/80 border border-slate-800 rounded-2xl text-sm font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition cursor-pointer"
           >
             {students.map((s) => (
-              <option key={s.id} value={s.id}>
+              <option key={s.id} value={s.id} className="bg-slate-900 text-slate-100">
                 {s.name} ({s.roleTitle})
               </option>
             ))}
@@ -90,18 +90,18 @@ export const SkillGapPage: React.FC = () => {
         </div>
 
         {/* Job Dropdown */}
-        <div className="space-y-1.5">
-          <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <Briefcase className="w-4 h-4 text-indigo-600" />
-            Select Target Job Profile
+        <div className="space-y-2">
+          <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+            <Briefcase className="w-4 h-4 text-indigo-400" />
+            Select Target Job Profile Benchmark
           </label>
           <select
             value={selectedJobId}
             onChange={(e) => setSelectedJobId(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:bg-white transition cursor-pointer"
+            className="w-full px-4 py-3 bg-slate-950/80 border border-slate-800 rounded-2xl text-sm font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition cursor-pointer"
           >
             {jobs.map((j) => (
-              <option key={j.id} value={j.id}>
+              <option key={j.id} value={j.id} className="bg-slate-900 text-slate-100">
                 {j.title} &mdash; {j.company}
               </option>
             ))}
@@ -125,12 +125,12 @@ export const SkillGapPage: React.FC = () => {
           <RecommendationCard recommendations={analysisResult.recommendations} />
 
           {/* Application & Export Actions */}
-          <div className="flex flex-col sm:flex-row items-center justify-end gap-3 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-            <Button variant="outline" size="md">
-              <Download className="w-4 h-4 mr-2" />
-              Download Analysis Report (PDF)
+          <div className="flex flex-col sm:flex-row items-center justify-end gap-3 p-5 bg-slate-900/60 rounded-3xl border border-slate-800/80 backdrop-blur-xl shadow-xl">
+            <Button variant="outline" size="md" className="border-slate-800 bg-slate-950/60 text-slate-300 hover:bg-slate-800">
+              <Download className="w-4 h-4 mr-2 text-indigo-400" />
+              Download Gap Report (PDF)
             </Button>
-            <Button variant="primary" size="md" onClick={() => setIsApplyModalOpen(true)}>
+            <Button variant="primary" size="md" onClick={() => setIsApplyModalOpen(true)} className="shadow-lg shadow-indigo-600/30">
               <Send className="w-4 h-4 mr-2" />
               Submit Application ({analysisResult.overallMatchScore}% Match)
             </Button>
@@ -147,3 +147,4 @@ export const SkillGapPage: React.FC = () => {
     </div>
   );
 };
+
