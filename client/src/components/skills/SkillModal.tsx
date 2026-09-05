@@ -74,24 +74,24 @@ export const SkillModal: React.FC<SkillModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-      <div className="bg-slate-900/95 border border-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl shadow-indigo-950/50 backdrop-blur-2xl">
-        <div className="flex items-center justify-between p-5 border-b border-slate-800/80 bg-slate-950/60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md animate-fade-in">
+      <div className="bg-zinc-900/95 border border-zinc-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl backdrop-blur-2xl">
+        <div className="flex items-center justify-between p-5 border-b border-zinc-800/80 bg-zinc-950/60">
           <div className="flex items-center space-x-2.5">
             <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400">
               <Code2 className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-100 text-lg flex items-center gap-1.5">
+              <h3 className="font-semibold text-zinc-100 text-base flex items-center gap-1.5">
                 <span>{initialData ? 'Edit Skill Profile' : 'Create New Skill'}</span>
                 <Sparkles className="w-4 h-4 text-indigo-400" />
               </h3>
-              <p className="text-[11px] text-slate-400">Define technical competency criteria</p>
+              <p className="text-[11px] text-zinc-400">Define technical competency criteria</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition cursor-pointer"
+            className="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -112,15 +112,15 @@ export const SkillModal: React.FC<SkillModalProps> = ({
           />
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               Domain Category *
             </label>
             <select
               {...register('category')}
-              className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-xs sm:text-sm transition cursor-pointer"
+              className="w-full px-3.5 py-2.5 glass-input rounded-xl text-zinc-100 text-xs sm:text-sm focus:outline-none transition cursor-pointer"
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat} className="bg-slate-900 text-slate-100">
+                <option key={cat} value={cat} className="bg-zinc-900 text-zinc-100">
                   {cat}
                 </option>
               ))}
@@ -129,19 +129,19 @@ export const SkillModal: React.FC<SkillModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               Description (Optional)
             </label>
             <textarea
               {...register('description')}
               rows={3}
               placeholder="Brief summary or proficiency description of the technology..."
-              className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 text-xs sm:text-sm resize-none transition"
+              className="w-full px-3.5 py-2.5 glass-input rounded-xl text-zinc-100 placeholder:text-zinc-500 text-xs sm:text-sm resize-none transition"
             />
             {errors.description && <p className="mt-1 text-xs text-rose-400">{errors.description.message}</p>}
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800/80">
+          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-800/80">
             <Button type="button" variant="ghost" size="sm" onClick={onClose}>
               Cancel
             </Button>

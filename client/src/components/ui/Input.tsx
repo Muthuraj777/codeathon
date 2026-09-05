@@ -13,13 +13,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+          <label className="block text-xs font-medium text-zinc-300">
             {label}
           </label>
         )}
         <div className="relative flex items-center">
           {icon && (
-            <div className="absolute left-3.5 text-slate-500 pointer-events-none flex items-center justify-center">
+            <div className="absolute left-3.5 text-zinc-500 pointer-events-none flex items-center justify-center">
               {icon}
             </div>
           )}
@@ -27,10 +27,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             type={type}
             ref={ref}
             className={cn(
-              'w-full bg-slate-950/80 border border-slate-800 text-slate-100 text-xs sm:text-sm rounded-xl px-4 py-2.5 transition duration-200 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 disabled:opacity-50 disabled:cursor-not-allowed',
+              'w-full glass-input text-zinc-100 text-xs sm:text-sm rounded-xl px-3.5 py-2.5 transition duration-200 placeholder:text-zinc-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed',
               icon && 'pl-10',
               rightElement && 'pr-10',
-              error && 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-500/20',
+              error && 'border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20',
               className
             )}
             {...props}

@@ -10,7 +10,7 @@ import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
 import { Badge } from '../components/ui/Badge';
 import { GoogleLoginButton } from '../components/auth/GoogleLoginButton';
-import { LogIn, GraduationCap, Sparkles, ShieldCheck, Lock, Mail } from 'lucide-react';
+import { LogIn, GraduationCap, Sparkles, ShieldCheck, Lock, Mail, CheckCircle2 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading, error, clearError } = useAuthStore();
@@ -48,126 +48,155 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#070a13] text-slate-100 px-4 py-12 relative overflow-hidden selection:bg-indigo-500/30 selection:text-indigo-200">
-      {/* Background Glows */}
-      <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen flex items-center justify-center bg-[#09090b] text-zinc-100 px-4 py-12 relative overflow-hidden selection:bg-indigo-500/30 selection:text-indigo-200">
+      {/* Background Ambient Glows */}
+      <div className="fixed top-1/4 left-1/3 w-[500px] h-[500px] bg-blob-indigo pointer-events-none z-0 opacity-70" />
+      <div className="fixed bottom-1/4 right-1/3 w-[450px] h-[450px] bg-blob-purple pointer-events-none z-0 opacity-50" />
 
-      <div className="w-full max-w-md space-y-6 relative z-10 animate-fade-in">
-        {/* Branding Title */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 text-white shadow-xl shadow-indigo-500/30 border border-white/20 mb-1">
-            <GraduationCap className="w-7 h-7" />
+      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 animate-fade-in">
+        {/* Left Side: Bento Feature Hero (Desktop) */}
+        <div className="lg:col-span-6 space-y-6 text-left hidden lg:block">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-mono">
+            <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Competency Intelligence Engine
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-            Skill Gap <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 bg-clip-text text-transparent">Analyzer</span>
+
+          <h1 className="text-4xl font-extrabold tracking-tight text-white leading-tight">
+            Map skills, bridge gaps, <br />
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 bg-clip-text text-transparent">
+              accelerate career growth.
+            </span>
           </h1>
-          <p className="text-xs text-slate-400 font-light flex items-center justify-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            Enterprise Talent &amp; Competency Assessment Platform
+
+          <p className="text-sm text-zinc-400 leading-relaxed max-w-md font-normal">
+            Real-time competency analytics, AI role benchmark matching, and personalized skill development workflows for modern tech teams.
           </p>
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="p-4 rounded-2xl glass-bento space-y-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <div className="text-sm font-semibold text-white">98% Match Accuracy</div>
+              <div className="text-xs text-zinc-400">Algorithmic role score evaluation.</div>
+            </div>
+            <div className="p-4 rounded-2xl glass-bento space-y-2">
+              <ShieldCheck className="w-5 h-5 text-indigo-400" />
+              <div className="text-sm font-semibold text-white">Enterprise Ready</div>
+              <div className="text-xs text-zinc-400">Role-based access &amp; real-time metrics.</div>
+            </div>
+          </div>
         </div>
 
-        {/* Login Form Card */}
-        <Card className="border-slate-800/80 bg-slate-900/80 backdrop-blur-2xl text-white shadow-2xl">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl text-white flex items-center justify-between">
-              <span>Sign In</span>
-              <Badge variant="primary" dot className="text-[10px] font-mono-code">
-                <Sparkles className="w-3 h-3 text-indigo-400 mr-1" /> Enterprise
-              </Badge>
-            </CardTitle>
-            <CardDescription className="text-slate-400 text-xs">
-              Enter your credentials to access the competency platform
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent className="space-y-4">
-            {error && <Alert type="error" message={error} onClose={clearError} />}
-
-            {/* Google OAuth Button */}
-            <div className="py-1">
-              <GoogleLoginButton label="Sign in with Google" />
+        {/* Right Side: Auth Glass Card */}
+        <div className="lg:col-span-6 w-full max-w-md mx-auto">
+          {/* Mobile Header Logo */}
+          <div className="text-center space-y-2 mb-6 lg:hidden">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/20 border border-white/20">
+              <GraduationCap className="w-6 h-6" />
             </div>
+            <h1 className="text-2xl font-bold tracking-tight text-white">
+              Skill Gap <span className="bg-gradient-to-r from-indigo-400 to-purple-300 bg-clip-text text-transparent">Analyzer</span>
+            </h1>
+          </div>
 
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-800" />
+          <Card className="glass-bento text-zinc-100 shadow-2xl">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-xl text-white flex items-center justify-between">
+                <span>Sign In</span>
+                <Badge variant="primary" dot className="text-[10px] font-mono">
+                  Enterprise
+                </Badge>
+              </CardTitle>
+              <CardDescription className="text-zinc-400 text-xs">
+                Enter credentials to access your talent workspace
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              {error && <Alert type="error" message={error} onClose={clearError} />}
+
+              {/* Google OAuth Button */}
+              <div className="py-1">
+                <GoogleLoginButton label="Sign in with Google" />
               </div>
-              <div className="relative flex justify-center text-[10px] uppercase font-bold tracking-wider font-mono-code">
-                <span className="bg-slate-900 px-3 text-slate-500">Or continue with email</span>
+
+              <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-zinc-800" />
+                </div>
+                <div className="relative flex justify-center text-[10px] uppercase font-semibold tracking-wider font-mono">
+                  <span className="bg-zinc-900 px-3 text-zinc-500">Or email</span>
+                </div>
               </div>
-            </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <Input
-                label="Email Address"
-                type="email"
-                icon={<Mail className="w-4 h-4" />}
-                placeholder="name@company.com"
-                error={errors.email?.message}
-                {...register('email')}
-              />
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <Input
+                  label="Email Address"
+                  type="email"
+                  icon={<Mail className="w-4 h-4" />}
+                  placeholder="name@company.com"
+                  error={errors.email?.message}
+                  {...register('email')}
+                />
 
-              <Input
-                label="Password"
-                type="password"
-                icon={<Lock className="w-4 h-4" />}
-                placeholder="••••••••"
-                error={errors.password?.message}
-                {...register('password')}
-              />
+                <Input
+                  label="Password"
+                  type="password"
+                  icon={<Lock className="w-4 h-4" />}
+                  placeholder="••••••••"
+                  error={errors.password?.message}
+                  {...register('password')}
+                />
 
-              <Button type="submit" variant="glow" size="lg" className="w-full h-11" isLoading={isLoading}>
-                <LogIn className="w-4 h-4 mr-2" />
-                Sign In to Platform
-              </Button>
-            </form>
+                <Button type="submit" variant="glow" size="lg" className="w-full h-11" isLoading={isLoading}>
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In to Workspace
+                </Button>
+              </form>
 
-            <div className="relative my-5">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-800" />
+              <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-zinc-800" />
+                </div>
+                <div className="relative flex justify-center text-[10px] uppercase font-semibold tracking-wider font-mono">
+                  <span className="bg-zinc-900 px-3 text-zinc-500">Demo Accounts</span>
+                </div>
               </div>
-              <div className="relative flex justify-center text-[10px] uppercase font-bold tracking-wider font-mono-code">
-                <span className="bg-slate-900 px-3 text-slate-500">Or test with demo roles</span>
+
+              {/* Demo Role Selectors */}
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleDemoLogin('student')}
+                  className="px-2.5 py-2 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-xl text-xs font-medium text-zinc-300 hover:text-white transition cursor-pointer flex items-center justify-center gap-1"
+                >
+                  🎓 Student
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDemoLogin('employee')}
+                  className="px-2.5 py-2 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-xl text-xs font-medium text-zinc-300 hover:text-white transition cursor-pointer flex items-center justify-center gap-1"
+                >
+                  💼 Employee
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDemoLogin('admin')}
+                  className="px-2.5 py-2 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-xl text-xs font-medium text-zinc-300 hover:text-white transition cursor-pointer flex items-center justify-center gap-1"
+                >
+                  ⚡ Admin
+                </button>
               </div>
-            </div>
+            </CardContent>
 
-            {/* Demo Role Selectors */}
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('student')}
-                className="px-3 py-2 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition cursor-pointer flex items-center justify-center gap-1"
-              >
-                🎓 Student
-              </button>
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('employee')}
-                className="px-3 py-2 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition cursor-pointer flex items-center justify-center gap-1"
-              >
-                💼 Employee
-              </button>
-              <button
-                type="button"
-                onClick={() => handleDemoLogin('admin')}
-                className="px-3 py-2 bg-slate-950/80 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs font-semibold text-slate-300 hover:text-white transition cursor-pointer flex items-center justify-center gap-1"
-              >
-                ⚡ Admin
-              </button>
-            </div>
-          </CardContent>
-
-          <CardFooter className="justify-center border-t border-slate-800/80 pt-4">
-            <p className="text-xs text-slate-400">
-              Don't have an account?{' '}
-              <Link to="/register" className="font-bold text-indigo-400 hover:text-indigo-300 hover:underline">
-                Create Account
-              </Link>
-            </p>
-          </CardFooter>
-        </Card>
+            <CardFooter className="justify-center border-t border-zinc-800/80 pt-4">
+              <p className="text-xs text-zinc-400">
+                Don't have an account?{' '}
+                <Link to="/register" className="font-semibold text-indigo-400 hover:text-indigo-300 hover:underline">
+                  Create Account
+                </Link>
+              </p>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
     </div>
   );

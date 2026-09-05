@@ -24,8 +24,6 @@ export const DashboardPage: React.FC = () => {
       color: 'text-indigo-400',
       badge: 'Talent Pool',
       badgeVariant: 'primary' as const,
-      gradient: 'from-indigo-500/10 via-indigo-600/5 to-transparent',
-      borderColor: 'hover:border-indigo-500/40',
     },
     {
       title: 'Active Role Postings',
@@ -35,8 +33,6 @@ export const DashboardPage: React.FC = () => {
       color: 'text-purple-400',
       badge: 'Open Roles',
       badgeVariant: 'purple' as const,
-      gradient: 'from-purple-500/10 via-purple-600/5 to-transparent',
-      borderColor: 'hover:border-purple-500/40',
     },
     {
       title: 'Submitted Applications',
@@ -46,8 +42,6 @@ export const DashboardPage: React.FC = () => {
       color: 'text-emerald-400',
       badge: 'Pipeline',
       badgeVariant: 'success' as const,
-      gradient: 'from-emerald-500/10 via-emerald-600/5 to-transparent',
-      borderColor: 'hover:border-emerald-500/40',
     },
     {
       title: 'Average Match Percent',
@@ -57,38 +51,36 @@ export const DashboardPage: React.FC = () => {
       color: 'text-cyan-400',
       badge: 'Match Metric',
       badgeVariant: 'info' as const,
-      gradient: 'from-cyan-500/10 via-cyan-600/5 to-transparent',
-      borderColor: 'hover:border-cyan-500/40',
     },
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto">
-      {/* Executive Hero SaaS Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/90 to-purple-950/80 border border-slate-800/90 p-6 sm:p-10 shadow-2xl">
-        <div className="absolute -right-10 -bottom-10 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute right-1/3 -top-10 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="space-y-6 animate-fade-in max-w-7xl mx-auto">
+      {/* 21st.dev Executive Hero SaaS Banner */}
+      <div className="relative overflow-hidden rounded-3xl glass-bento border border-zinc-800/80 p-6 sm:p-10 shadow-2xl">
+        <div className="absolute -right-10 -bottom-10 w-96 h-96 bg-blob-indigo pointer-events-none opacity-80" />
+        <div className="absolute right-1/3 -top-10 w-80 h-80 bg-blob-purple pointer-events-none opacity-60" />
 
         <div className="relative z-10 max-w-3xl space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="primary" dot className="px-3 py-1 font-semibold text-xs">
+            <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              <span>AI Competency Intelligence Engine</span>
+              <span>AI Competency Engine</span>
             </Badge>
-            <Badge variant="neutral" className="text-[10px] font-mono-code">
+            <Badge variant="neutral" className="text-[10px] font-mono">
               Updated Live
             </Badge>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
             Enterprise Talent <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 bg-clip-text text-transparent">Skill Gap Analytics</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300/90 leading-relaxed font-light">
+          <p className="text-sm sm:text-base text-zinc-400 leading-relaxed font-normal">
             Real-time organizational insights, candidate job readiness metrics, and automated AI skill gap frequency matrix across enterprise talent pools.
           </p>
 
-          <div className="pt-3 flex flex-wrap items-center gap-3">
+          <div className="pt-2 flex flex-wrap items-center gap-3">
             <Link to="/skill-gap">
               <Button variant="glow" size="lg" className="gap-2">
                 <Target className="w-4 h-4" />
@@ -106,36 +98,33 @@ export const DashboardPage: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Metrics SaaS Grid */}
+      {/* KPI Metrics Bento Grid */}
       {isLoading ? (
         <div className="py-16 flex justify-center">
           <Spinner size="lg" label="Syncing organizational KPI metrics..." />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {metrics.map((m) => (
-            <Card
-              key={m.title}
-              className={`bg-slate-900/70 border-slate-800/80 backdrop-blur-xl ${m.borderColor} glass-card-hover group`}
-            >
-              <CardContent className="p-6 space-y-4">
+            <Card key={m.title} className="glass-bento group">
+              <CardContent className="p-5 sm:p-6 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{m.title}</span>
+                  <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">{m.title}</span>
                   <Badge variant={m.badgeVariant} className="text-[10px]">
                     {m.badge}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between pt-1">
                   <div className="space-y-1">
-                    <h3 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-mono-code">
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-mono">
                       {m.value}
                     </h3>
-                    <p className="text-[11px] font-medium text-emerald-400 flex items-center gap-1 font-mono-code">
+                    <p className="text-[11px] font-medium text-emerald-400 flex items-center gap-1 font-mono">
                       <TrendingUp className="w-3 h-3 shrink-0" /> {m.change}
                     </p>
                   </div>
-                  <div className={`p-3 rounded-2xl bg-slate-950 border border-slate-800 ${m.color} group-hover:scale-110 transition duration-200 shadow-md`}>
-                    <m.icon className="w-6 h-6" />
+                  <div className={`p-3 rounded-2xl bg-zinc-950 border border-zinc-800 ${m.color} group-hover:scale-105 transition duration-200 shadow-md`}>
+                    <m.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                 </div>
               </CardContent>
@@ -144,30 +133,30 @@ export const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* Analytics Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Top Skill Gaps Visualizer */}
+      {/* Analytics Main Bento Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Top Skill Gaps Matrix Visualizer */}
         <div className="lg:col-span-2">
           <SkillGapChart topSkillGaps={stats.topSkillGaps} />
         </div>
 
         {/* Action Panel & Platform Shortcuts */}
         <div className="space-y-6">
-          <Card className="bg-slate-900/70 backdrop-blur-xl border-slate-800/80 shadow-2xl relative overflow-hidden">
+          <Card className="glass-bento relative overflow-hidden">
             <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2 text-base font-bold">
+              <CardTitle className="text-white flex items-center gap-2 text-base font-semibold">
                 <Award className="w-5 h-5 text-indigo-400" />
                 <span>Executive Control Panel</span>
               </CardTitle>
-              <CardDescription className="text-slate-400 text-xs">
+              <CardDescription className="text-zinc-400 text-xs">
                 Instant shortcuts to evaluate candidate readiness, update competency matrices, and review applications.
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="space-y-3.5">
+            <CardContent className="space-y-3">
               <Link to="/skill-gap" className="block w-full">
-                <Button variant="primary" className="w-full justify-between h-11">
+                <Button variant="primary" className="w-full justify-between h-10.5">
                   <span className="flex items-center gap-2">
                     <Zap className="w-4 h-4 text-amber-300" /> Run Skill Gap Matrix
                   </span>
@@ -176,22 +165,22 @@ export const DashboardPage: React.FC = () => {
               </Link>
 
               <Link to="/profile" className="block w-full">
-                <Button variant="outline" className="w-full justify-between h-11">
+                <Button variant="outline" className="w-full justify-between h-10.5">
                   <span className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-indigo-400" /> Update My Skill Matrix
                   </span>
-                  <span className="text-[10px] font-mono-code text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                  <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
                     Edit
                   </span>
                 </Button>
               </Link>
 
               <Link to="/applications" className="block w-full">
-                <Button variant="secondary" className="w-full justify-between h-11">
+                <Button variant="secondary" className="w-full justify-between h-10.5">
                   <span className="flex items-center gap-2">
                     <FileCheck className="w-4 h-4 text-emerald-400" /> Review Submitted Applications
                   </span>
-                  <Badge variant="success" className="font-mono-code">
+                  <Badge variant="success" className="font-mono">
                     {stats.totalApplications}
                   </Badge>
                 </Button>

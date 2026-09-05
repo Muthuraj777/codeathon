@@ -70,7 +70,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       <Button
         type="button"
         variant="outline"
-        className="w-full bg-white text-slate-700 hover:bg-slate-50 border-slate-300 font-semibold text-xs h-10 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+        className="w-full bg-zinc-900/90 text-zinc-200 hover:bg-zinc-800 hover:text-white border-zinc-800 font-medium text-xs h-10 flex items-center justify-center gap-2.5 cursor-pointer transition shadow-sm"
         onClick={handleFirebaseGoogleLogin}
         isLoading={isFirebaseLoading}
       >

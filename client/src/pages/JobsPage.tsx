@@ -124,19 +124,19 @@ export const JobsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto animate-fade-in">
+    <div className="space-y-6 max-w-7xl mx-auto animate-fade-in">
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <Badge variant="primary" dot className="px-3 py-1 font-semibold text-xs mb-2">
+          <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs mb-2">
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
             <span>Target Role Specifications</span>
           </Badge>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-            <Briefcase className="w-8 h-8 text-indigo-400" />
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <Briefcase className="w-7 h-7 text-indigo-400" />
             <span>Job Profiles &amp; Skill Benchmarks</span>
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
             Define target job roles, minimum proficiency benchmarks, and mandatory skill requirements.
           </p>
         </div>
@@ -148,7 +148,7 @@ export const JobsPage: React.FC = () => {
 
       {error && <Alert type="error" message={error} />}
 
-      {/* Main SaaS Master-Detail Grid */}
+      {/* Main Master-Detail Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Master List Column */}
         <div className="lg:col-span-4 space-y-4">
@@ -164,12 +164,12 @@ export const JobsPage: React.FC = () => {
 
           <div className="space-y-3 max-h-[680px] overflow-y-auto pr-1">
             {isLoading && jobs.length === 0 ? (
-              <div className="p-12 text-center text-slate-500 text-xs flex flex-col items-center justify-center space-y-2">
+              <div className="p-12 text-center text-zinc-500 text-xs flex flex-col items-center justify-center space-y-2">
                 <Loader2 className="w-6 h-6 animate-spin text-indigo-400" />
                 <span>Loading job postings...</span>
               </div>
             ) : jobs.length === 0 ? (
-              <div className="p-8 text-center text-slate-400 text-xs bg-slate-900/40 border border-slate-800/80 rounded-2xl backdrop-blur-md">
+              <div className="p-8 text-center text-zinc-400 text-xs glass-bento rounded-2xl">
                 No job postings found. Click "Post New Job" to create one.
               </div>
             ) : (
@@ -180,31 +180,31 @@ export const JobsPage: React.FC = () => {
                   <Card
                     key={jId}
                     onClick={() => handleSelectJob(jId)}
-                    className={`cursor-pointer transition-all duration-200 backdrop-blur-xl ${
+                    className={`cursor-pointer transition-all duration-200 ${
                       isSelected
-                        ? 'border-indigo-500/80 bg-indigo-950/20 shadow-lg shadow-indigo-950/50 ring-1 ring-indigo-500/30'
-                        : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/80'
+                        ? 'border-indigo-500/80 bg-indigo-950/20 shadow-md ring-1 ring-indigo-500/30'
+                        : 'glass-bento hover:border-zinc-700'
                     }`}
                   >
                     <CardContent className="p-4 space-y-2">
                       <div className="flex items-start justify-between gap-2">
-                        <h3 className="font-bold text-slate-100 text-sm sm:text-base leading-snug">{j.title}</h3>
+                        <h3 className="font-semibold text-zinc-100 text-sm sm:text-base leading-snug">{j.title}</h3>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteJob(jId);
                           }}
-                          className="text-slate-500 hover:text-rose-400 p-1 transition rounded-lg hover:bg-slate-800/80"
+                          className="text-zinc-500 hover:text-rose-400 p-1 transition rounded-lg hover:bg-zinc-800/80"
                           title="Delete Job Profile"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                       <div className="flex items-center gap-4 text-xs">
-                        <span className="flex items-center gap-1 font-semibold text-indigo-400">
+                        <span className="flex items-center gap-1 font-medium text-indigo-400">
                           <Building className="w-3.5 h-3.5" /> {j.company}
                         </span>
-                        <span className="flex items-center gap-1 text-slate-400">
+                        <span className="flex items-center gap-1 text-zinc-400">
                           <MapPin className="w-3.5 h-3.5" /> {j.location || 'Remote'}
                         </span>
                       </div>
@@ -219,17 +219,17 @@ export const JobsPage: React.FC = () => {
         {/* Right Detail Column */}
         <div className="lg:col-span-8 space-y-6">
           {selectedJob ? (
-            <Card className="border-slate-800/80 bg-slate-900/70 backdrop-blur-xl shadow-2xl">
-              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
+            <Card className="glass-bento shadow-2xl">
+              <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
                 <div className="space-y-1">
-                  <h2 className="text-2xl font-bold text-white tracking-tight">{selectedJob.title}</h2>
-                  <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-400">
-                    <span className="font-semibold text-indigo-400 flex items-center gap-1">
+                  <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">{selectedJob.title}</h2>
+                  <div className="flex items-center gap-3 text-xs sm:text-sm text-zinc-400">
+                    <span className="font-medium text-indigo-400 flex items-center gap-1">
                       <Building className="w-4 h-4 text-indigo-400" /> {selectedJob.company}
                     </span>
                     <span>&bull;</span>
                     <span className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-slate-500" /> {selectedJob.location || 'Remote'}
+                      <MapPin className="w-4 h-4 text-zinc-500" /> {selectedJob.location || 'Remote'}
                     </span>
                   </div>
                 </div>
@@ -247,35 +247,35 @@ export const JobsPage: React.FC = () => {
               <CardContent className="p-6 space-y-6">
                 {selectedJob.description && (
                   <div>
-                    <h4 className="text-[11px] font-mono-code font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                    <h4 className="text-[11px] font-mono font-medium uppercase tracking-wider text-zinc-400 mb-1.5">
                       Role Overview &amp; Specifications
                     </h4>
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed bg-zinc-950/60 p-4 rounded-xl border border-zinc-800/80">
                       {selectedJob.description}
                     </p>
                   </div>
                 )}
 
                 {/* Add Skill Requirement Form */}
-                <div className="bg-slate-950/70 border border-slate-800/80 rounded-2xl p-5 space-y-4 shadow-inner">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <div className="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 space-y-4">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
                     <Target className="w-4 h-4 text-indigo-400" />
                     Configure Required Skill Benchmark
                   </h4>
                   <form onSubmit={handleAddRequiredSkill} className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
                     <div className="sm:col-span-5">
-                      <label className="block text-[10px] font-mono-code font-bold text-slate-400 uppercase tracking-wider mb-1">
+                      <label className="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">
                         Select Skill from Taxonomy
                       </label>
                       <select
                         value={selectedSkillId}
                         onChange={(e) => setSelectedSkillId(e.target.value)}
                         required
-                        className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
+                        className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs font-medium text-zinc-100 focus:outline-none cursor-pointer"
                       >
                         <option value="">-- Choose skill --</option>
                         {catalogSkills.map((sk) => (
-                          <option key={sk._id || sk.id} value={sk._id || sk.id} className="bg-slate-900 text-slate-100">
+                          <option key={sk._id || sk.id} value={sk._id || sk.id} className="bg-zinc-900 text-zinc-100">
                             {sk.name} ({sk.category})
                           </option>
                         ))}
@@ -283,13 +283,13 @@ export const JobsPage: React.FC = () => {
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label className="block text-[10px] font-mono-code font-bold text-slate-400 uppercase tracking-wider mb-1">
+                      <label className="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">
                         Proficiency Benchmark (1-5)
                       </label>
                       <select
                         value={requiredLevel}
                         onChange={(e) => setRequiredLevel(Number(e.target.value))}
-                        className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-semibold text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer"
+                        className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs font-medium text-zinc-100 focus:outline-none cursor-pointer"
                       >
                         <option value={1}>1 - Beginner</option>
                         <option value={2}>2 - Basic</option>
@@ -300,19 +300,19 @@ export const JobsPage: React.FC = () => {
                     </div>
 
                     <div className="sm:col-span-2">
-                      <label className="block text-[10px] font-mono-code font-bold text-slate-400 uppercase tracking-wider mb-1">
+                      <label className="block text-[10px] font-mono font-medium text-zinc-400 uppercase tracking-wider mb-1">
                         Mandatory
                       </label>
                       <button
                         type="button"
                         onClick={() => setIsMandatory(!isMandatory)}
-                        className={`w-full py-2 px-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border cursor-pointer ${
+                        className={`w-full py-2 px-2 rounded-xl text-xs font-medium transition flex items-center justify-center gap-1 border cursor-pointer ${
                           isMandatory
                             ? 'bg-rose-950/40 text-rose-300 border-rose-800/80'
-                            : 'bg-slate-900 text-slate-400 border-slate-800'
+                            : 'bg-zinc-900 text-zinc-400 border-zinc-800'
                         }`}
                       >
-                        {isMandatory ? <CheckCircle2 className="w-3.5 h-3.5 text-rose-400" /> : <XCircle className="w-3.5 h-3.5 text-slate-500" />}
+                        {isMandatory ? <CheckCircle2 className="w-3.5 h-3.5 text-rose-400" /> : <XCircle className="w-3.5 h-3.5 text-zinc-500" />}
                         {isMandatory ? 'Yes' : 'No'}
                       </button>
                     </div>
@@ -327,15 +327,15 @@ export const JobsPage: React.FC = () => {
 
                 {/* Required Skills Matrix List */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+                  <h3 className="text-xs font-semibold text-zinc-300 uppercase tracking-wider flex items-center justify-between">
                     <span>Active Required Skill Benchmarks</span>
-                    <Badge variant="neutral" className="font-mono-code">
+                    <Badge variant="neutral" className="font-mono">
                       {jobSkills.length} Skills Configured
                     </Badge>
                   </h3>
 
                   {jobSkills.length === 0 ? (
-                    <div className="p-8 text-center text-xs text-slate-500 italic bg-slate-950/40 rounded-2xl border border-slate-800/60">
+                    <div className="p-8 text-center text-xs text-zinc-500 italic bg-zinc-950/40 rounded-2xl border border-zinc-800/60">
                       No skill requirements defined yet for this role profile. Add one using the form above.
                     </div>
                   ) : (
@@ -343,10 +343,10 @@ export const JobsPage: React.FC = () => {
                       {jobSkills.map((req) => (
                         <div
                           key={req.id || req.skillId}
-                          className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 transition shadow-md gap-3"
+                          className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/80 hover:border-zinc-700 transition shadow-sm gap-3"
                         >
                           <div className="flex flex-wrap items-center gap-3">
-                            <span className="font-bold text-slate-100 text-sm">{req.name}</span>
+                            <span className="font-semibold text-zinc-100 text-sm">{req.name}</span>
                             <Badge variant="neutral" className="text-[10px]">
                               {req.category}
                             </Badge>
@@ -367,18 +367,18 @@ export const JobsPage: React.FC = () => {
                                 <Star
                                   key={star}
                                   className={`w-3.5 h-3.5 ${
-                                    star <= req.requiredLevel ? 'fill-amber-400 text-amber-400' : 'text-slate-800'
+                                    star <= req.requiredLevel ? 'fill-amber-400 text-amber-400' : 'text-zinc-800'
                                   }`}
                                 />
                               ))}
-                              <span className="text-xs font-mono-code font-bold text-indigo-300 ml-1.5">
+                              <span className="text-xs font-mono font-semibold text-indigo-300 ml-1.5">
                                 {req.requiredLevel}/5
                               </span>
                             </div>
 
                             <button
                               onClick={() => handleRemoveSkill(req.skillId || req.id)}
-                              className="text-slate-500 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition cursor-pointer"
+                              className="text-zinc-500 hover:text-rose-400 p-1.5 rounded-lg hover:bg-zinc-800 transition cursor-pointer"
                               title="Remove skill requirement"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -392,10 +392,10 @@ export const JobsPage: React.FC = () => {
               </CardContent>
             </Card>
           ) : (
-            <div className="p-16 text-center text-slate-500 bg-slate-900/40 border border-slate-800/80 rounded-3xl backdrop-blur-xl space-y-2">
-              <FileSpreadsheet className="w-12 h-12 text-slate-700 mx-auto" />
-              <p className="font-bold text-slate-300 text-base">No Job Selected</p>
-              <p className="text-xs text-slate-400 max-w-xs mx-auto">
+            <div className="p-16 text-center text-zinc-500 glass-bento rounded-3xl space-y-2">
+              <FileSpreadsheet className="w-12 h-12 text-zinc-700 mx-auto" />
+              <p className="font-semibold text-zinc-300 text-base">No Job Selected</p>
+              <p className="text-xs text-zinc-400 max-w-xs mx-auto">
                 Select a job profile from the master list on the left to view or configure its skill requirements.
               </p>
             </div>
@@ -405,16 +405,16 @@ export const JobsPage: React.FC = () => {
 
       {/* Post New Job Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-          <div className="bg-slate-900/95 border border-slate-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl shadow-indigo-950/50 backdrop-blur-2xl">
-            <div className="p-5 border-b border-slate-800/80 bg-slate-950/60 flex items-center justify-between">
-              <h3 className="font-bold text-slate-100 text-lg flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md animate-fade-in">
+          <div className="bg-zinc-900/95 border border-zinc-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl backdrop-blur-2xl">
+            <div className="p-5 border-b border-zinc-800/80 bg-zinc-950/60 flex items-center justify-between">
+              <h3 className="font-semibold text-zinc-100 text-base flex items-center gap-2">
                 <Briefcase className="w-5 h-5 text-indigo-400" />
                 <span>Post New Job Profile</span>
               </h3>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer"
+                className="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -442,7 +442,7 @@ export const JobsPage: React.FC = () => {
                 onChange={(e) => setNewLocation(e.target.value)}
               />
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
                   Job Description &amp; Role Summary
                 </label>
                 <textarea
@@ -450,11 +450,11 @@ export const JobsPage: React.FC = () => {
                   placeholder="Enter job summary and key responsibilities..."
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-950/80 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 resize-none transition"
+                  className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs sm:text-sm text-zinc-100 placeholder:text-zinc-500 focus:outline-none resize-none transition"
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-3 border-t border-slate-800/80">
+              <div className="flex justify-end gap-3 pt-3 border-t border-zinc-800/80">
                 <Button type="button" variant="ghost" size="sm" onClick={() => setShowCreateModal(false)}>
                   Cancel
                 </Button>

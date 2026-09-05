@@ -2,7 +2,7 @@
 
 @layer base {
   :root {
-    --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
@@ -12,111 +12,121 @@
 
   html, body {
     font-family: var(--font-sans);
-    background-color: #070a13;
-    color: #f1f5f9;
+    background-color: #09090b;
+    color: #f4f4f5;
     overflow-x: hidden;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.011em;
   }
 }
 
-/* Custom Scrollbars */
+/* Custom Minimal Dark Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #070a13;
+  background: #09090b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #27272a;
   border-radius: 9999px;
-  border: 1px solid #070a13;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #3f3f46;
 }
 
-/* SaaS Utility Classes */
+/* 21st.dev Soft Glassmorphism & Bento System */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-card {
-  background: linear-gradient(135deg, rgba(17, 24, 39, 0.7) 0%, rgba(11, 15, 25, 0.8) 100%);
+  background: rgba(18, 18, 23, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
-.glass-card-hover {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.glass-card-hover:hover {
-  border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 0 16px 40px -12px rgba(99, 102, 241, 0.22);
-  transform: translateY(-2px);
-}
-
-.glow-purple {
-  box-shadow: 0 0 30px -5px rgba(147, 51, 234, 0.25);
+.glass-bento {
+  background: linear-gradient(145deg, rgba(24, 24, 31, 0.65) 0%, rgba(14, 14, 18, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.glass-bento:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(99, 102, 241, 0.15);
+}
+
+.glass-card {
+  background: rgba(24, 24, 27, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-input {
+  background: rgba(18, 18, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f4f4f5;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  outline: none;
+}
+
+/* Glowing Accents */
 .glow-indigo {
-  box-shadow: 0 0 30px -5px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.25);
 }
-
+.glow-purple {
+  box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.25);
+}
 .glow-cyan {
-  box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.25);
+  box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.25);
 }
-
 .glow-emerald {
-  box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.25);
 }
 
 .font-mono-code {
   font-family: var(--font-mono);
 }
 
-/* Ambient Background Blobs */
-.bg-blob-purple {
-  background: radial-gradient(circle, rgba(147, 51, 234, 0.14) 0%, rgba(0, 0, 0, 0) 70%);
-}
-
+/* Ambient Radial Mesh Background Blobs */
 .bg-blob-indigo {
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(9, 9, 11, 0) 70%);
 }
-
+.bg-blob-purple {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(9, 9, 11, 0) 70%);
+}
 .bg-blob-cyan {
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, rgba(9, 9, 11, 0) 70%);
 }
 
-/* Smooth Fade In Animation */
+/* Keyframe Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
 .animate-fade-in {
-  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Subtle Shimmer for Skeleton Loaders */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 .skeleton-shimmer {
-  background: linear-gradient(90deg, rgba(30, 41, 59, 0.5) 25%, rgba(51, 65, 85, 0.5) 50%, rgba(30, 41, 59, 0.5) 75%);
+  background: linear-gradient(90deg, rgba(39, 39, 42, 0.5) 25%, rgba(63, 63, 70, 0.5) 50%, rgba(39, 39, 42, 0.5) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.8s infinite;
 }
