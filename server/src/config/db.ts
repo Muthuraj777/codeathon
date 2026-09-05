@@ -3,8 +3,15 @@ import mongoose from 'mongoose';
 export const connectDB = async (): Promise<void> => {
   try {
     const connStr = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/skill_gap_analyzer';
-    const conn = await mongoose.connect(connStr);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    const conn = await mongoose.connect(connStr, {
+      maxPoolSize: 25,
+      minPoolSize: 5,
+      maxIdleTimeMS: 30000,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      autoIndex: process.env.NODE_ENV !== 'production',
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}/${conn.connection.name} (Pool: max 25, min 5)`);
   } catch (error) {
     console.error('MongoDB connection error:', error);
     if (process.env.NODE_ENV !== 'test') {
@@ -12,3 +19,11 @@ export const connectDB = async (): Promise<void> => {
     }
   }
 };
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('[MongoDB] Disconnected from database');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('[MongoDB] Connection event error:', err);
+});
