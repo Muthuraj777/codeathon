@@ -51,6 +51,51 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     [googleLogin, onSuccess, navigate]
   );
 
+  // Check URL hash for real Google OAuth redirect response (#id_token=...)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash && window.location.hash.includes('id_token=')) {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const idToken = params.get('id_token');
+      if (idToken) {
+        if (window.opener) {
+          try {
+            window.opener.postMessage({ type: 'GOOGLE_AUTH_SUCCESS', idToken }, window.location.origin);
+          } catch (e) {
+            console.warn('Failed to postMessage to opener:', e);
+          }
+          window.close();
+          return;
+        }
+
+        googleLogin(idToken).then((success) => {
+          if (success) {
+            window.history.replaceState(null, '', window.location.pathname);
+            if (onSuccess) onSuccess();
+            else navigate('/dashboard');
+          }
+        });
+      }
+    }
+  }, [googleLogin, navigate, onSuccess]);
+
+  // Listen for real Google OAuth postMessage from popup window
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === 'GOOGLE_AUTH_SUCCESS' && event.data?.idToken) {
+        const success = await googleLogin(event.data.idToken);
+        if (success) {
+          if (onSuccess) onSuccess();
+          else navigate('/dashboard');
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [googleLogin, navigate, onSuccess]);
+
   useEffect(() => {
     const scriptId = 'google-gsi-script';
     let script = document.getElementById(scriptId) as HTMLScriptElement;
@@ -81,7 +126,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         window.google.accounts.id.renderButton(buttonRef.current, {
           theme: 'outline',
           size: 'large',
-          width: '100%',
+          width: '280',
           text: 'continue_with',
           shape: 'rectangular',
         });
@@ -93,7 +138,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     }
   }, [scriptLoaded, googleClientId, handleCredentialResponse]);
 
-  const handleFallbackClick = async () => {
+  const handleRealGoogleOAuth = () => {
     if (window.google?.accounts?.id && googleClientId) {
       try {
         window.google.accounts.id.initialize({
@@ -101,49 +146,48 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           callback: handleCredentialResponse,
         });
         window.google.accounts.id.prompt();
+        return;
       } catch (e) {
         console.warn('Google GSI prompt failed:', e);
       }
     }
 
-    // Direct Google authentication fallback
-    const base64UrlEncode = (obj: object) => {
-      const json = JSON.stringify(obj);
-      return btoa(json).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-    };
-    const header = base64UrlEncode({ alg: 'RS256', typ: 'JWT' });
-    const payload = base64UrlEncode({
-      iss: 'https://accounts.google.com',
-      azp: googleClientId,
-      aud: googleClientId,
-      sub: 'google-oauth-student-demo',
-      email: 'student@example.com',
-      email_verified: true,
-      name: 'Google User',
-      picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 3600,
-    });
-    const mockToken = `${header}.${payload}.mockSignature`;
-    const success = await googleLogin(mockToken);
-    if (success) {
-      if (onSuccess) onSuccess();
-      else navigate('/dashboard');
+    // Launch Real Google OAuth 2.0 Account Selector Popup Window
+    if (googleClientId) {
+      const oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+      const width = 500;
+      const height = 600;
+      const left = window.screenX + (window.innerWidth - width) / 2;
+      const top = window.screenY + (window.innerHeight - height) / 2;
+
+      const params = new URLSearchParams({
+        client_id: googleClientId,
+        redirect_uri: window.location.origin + '/login',
+        response_type: 'id_token',
+        scope: 'openid email profile',
+        nonce: Math.random().toString(36).substring(2),
+      });
+
+      window.open(
+        `${oauth2Endpoint}?${params.toString()}`,
+        'GoogleOAuthPopup',
+        `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,status=yes`
+      );
     }
   };
 
   return (
-    <div className="w-full flex justify-center relative min-h-[40px]">
+    <div className="w-full flex justify-center relative min-h-[40px] my-1">
       {/* Official Google GSI Button Container */}
       <div ref={buttonRef} className={`w-full flex justify-center ${gsiRendered ? 'block' : 'hidden'}`} />
 
-      {/* Styled Google Button (Always visible if GSI is loading or failed) */}
+      {/* Styled Real Google Button (Shown if GSI script is loading) */}
       {!gsiRendered && (
         <Button
           type="button"
           variant="outline"
           className="w-full bg-white text-slate-700 hover:bg-slate-50 border-slate-300 font-semibold text-xs h-10 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-          onClick={handleFallbackClick}
+          onClick={handleRealGoogleOAuth}
           isLoading={isLoading}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
