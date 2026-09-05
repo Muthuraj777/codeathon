@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
+import { GoogleLoginButton } from '../components/auth/GoogleLoginButton';
 import { LogIn, GraduationCap } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -63,6 +64,18 @@ export const LoginPage: React.FC = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {error && <Alert type="error" message={error} onClose={clearError} />}
+
+            {/* Google OAuth Login Feature */}
+            <GoogleLoginButton label="Sign in with Google" />
+
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-700" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-slate-800 px-2 text-slate-400">Or continue with email</span>
+              </div>
+            </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div className="relative">
