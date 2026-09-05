@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getSkillGapAnalysis, getRecommendations } from '../controllers/skillGapController.js';
+import { SkillGapController } from '../controllers/skillGapController.js';
 
 const router = Router({ mergeParams: true });
 
-router.get('/:studentId/jobs/:jobId/skill-gap', getSkillGapAnalysis);
-router.get('/:studentId/jobs/:jobId/recommendations', getRecommendations);
+router.get('/:studentId/jobs/:jobId/skill-gap', SkillGapController.getSkillGap);
+router.get('/:studentId/jobs/:jobId/recommendations', SkillGapController.getRecommendations);
 
 export default router;
