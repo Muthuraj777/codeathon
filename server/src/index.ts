@@ -9,6 +9,8 @@ import skillRoutes from './routes/skillRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
 import skillGapRoutes from './routes/skillGapRoutes.js';
+import applicationRoutes from './routes/applicationRoutes.js';
+import seedRoutes from './routes/seedRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -22,7 +24,7 @@ connectDB();
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: process.env.CLIENT_URL ? [process.env.CLIENT_URL, 'http://localhost:5173', 'http://localhost:3000'] : ['http://localhost:5173', 'http://localhost:3000'],
     credentials: true,
   })
 );
@@ -35,6 +37,8 @@ app.use('/api/skills', skillRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/students', skillGapRoutes);
 app.use('/api/jobs', jobRoutes);
+app.use('/api/applications', applicationRoutes);
+app.use('/api/seed', seedRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });

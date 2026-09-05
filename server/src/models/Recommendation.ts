@@ -4,7 +4,7 @@ export interface IRecommendation extends Document {
   student_id: mongoose.Types.ObjectId;
   job_id: mongoose.Types.ObjectId;
   skill_id: mongoose.Types.ObjectId;
-  priority: 'High' | 'Medium' | 'Low';
+  priority: 'High' | 'Medium' | 'Low' | 'HIGH' | 'MEDIUM' | 'LOW';
   reason: string;
   current_level: number;
   target_level: number;
@@ -33,7 +33,7 @@ const RecommendationSchema = new Schema<IRecommendation>(
     },
     priority: {
       type: String,
-      enum: ['High', 'Medium', 'Low'],
+      enum: ['High', 'Medium', 'Low', 'HIGH', 'MEDIUM', 'LOW'],
       required: true,
     },
     reason: {
@@ -59,7 +59,6 @@ const RecommendationSchema = new Schema<IRecommendation>(
   }
 );
 
-// Unique constraint per student, job, and skill recommendation
 RecommendationSchema.index({ student_id: 1, job_id: 1, skill_id: 1 }, { unique: true });
 
 export const Recommendation = mongoose.model<IRecommendation>('Recommendation', RecommendationSchema);
