@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDashboardStore } from '../stores/useDashboardStore';
 import { SkillGapChart } from '../components/dashboard/SkillGapChart';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/Card';
-import { Badge } from '../components/ui/Badge';
 import { Spinner } from '../components/ui/Spinner';
 import { Users, Briefcase, FileCheck, Percent, ArrowRight, Target, Sparkles, TrendingUp, Compass, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -18,7 +17,7 @@ export const DashboardPage: React.FC = () => {
     {
       title: 'Total Candidates & Employees',
       value: stats.totalEmployees.toString(),
-      change: '+14% this month',
+      change: stats.employeesMeta || `${stats.totalEmployees} registered candidates`,
       icon: Users,
       color: 'text-indigo-400',
       glow: 'shadow-indigo-500/10 border-indigo-500/20',
@@ -27,7 +26,7 @@ export const DashboardPage: React.FC = () => {
     {
       title: 'Active Job Openings',
       value: stats.totalJobs.toString(),
-      change: '8 high priority',
+      change: stats.jobsMeta || `${stats.totalJobs} active job posts`,
       icon: Briefcase,
       color: 'text-purple-400',
       glow: 'shadow-purple-500/10 border-purple-500/20',
@@ -36,7 +35,7 @@ export const DashboardPage: React.FC = () => {
     {
       title: 'Submitted Applications',
       value: stats.totalApplications.toString(),
-      change: '92% reviewed',
+      change: stats.applicationsMeta || `${stats.totalApplications} submitted`,
       icon: FileCheck,
       color: 'text-emerald-400',
       glow: 'shadow-emerald-500/10 border-emerald-500/20',
@@ -45,7 +44,7 @@ export const DashboardPage: React.FC = () => {
     {
       title: 'Average Skill Match',
       value: `${stats.averageMatchPercent}%`,
-      change: '+6% optimization',
+      change: stats.matchMeta || 'Avg match percentage',
       icon: Percent,
       color: 'text-cyan-400',
       glow: 'shadow-cyan-500/10 border-cyan-500/20',
@@ -54,7 +53,7 @@ export const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto">
       {/* Executive Hero Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/90 to-purple-950/80 border border-slate-800 p-6 sm:p-10 shadow-2xl">
         <div className="absolute -right-10 -bottom-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -66,7 +65,7 @@ export const DashboardPage: React.FC = () => {
             Executive Competency Intelligence
           </div>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-            Employee & Candidate <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 bg-clip-text text-transparent">Skill Gap Analytics</span>
+            Employee &amp; Candidate <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-cyan-300 bg-clip-text text-transparent">Skill Gap Analytics</span>
           </h1>
           <p className="text-sm text-slate-300/90 leading-relaxed font-light">
             Real-time organizational insights, job readiness metrics, and automated AI skill gap frequency analysis across talent pools.
@@ -92,22 +91,22 @@ export const DashboardPage: React.FC = () => {
       {/* KPI Metrics Grid */}
       {isLoading ? (
         <div className="py-12 flex justify-center">
-          <Spinner size="lg" label="Loading organizational KPI metrics..." />
+          <Spinner size="lg" label="Loading real-time organizational KPI metrics..." />
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {metrics.map((m) => (
-            <Card key={m.title} className={`bg-gradient-to-br ${m.gradient} ${m.glow} glass-card-hover`}>
+            <Card key={m.title} className={`bg-slate-900/70 border-slate-800/80 backdrop-blur-xl ${m.glow} glass-card-hover`}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{m.title}</span>
-                  <div className={`p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 ${m.color}`}>
+                  <div className={`p-2.5 rounded-xl bg-slate-950 border border-slate-800 ${m.color}`}>
                     <m.icon className="w-5 h-5" />
                   </div>
                 </div>
                 <div className="mt-4 flex items-baseline justify-between">
-                  <h3 className="text-3xl font-extrabold text-white tracking-tight font-mono-code">{m.value}</h3>
-                  <span className="text-[11px] font-semibold text-emerald-400 flex items-center gap-1 font-mono-code">
+                  <h3 className="text-3xl font-extrabold text-white tracking-tight font-mono">{m.value}</h3>
+                  <span className="text-[11px] font-semibold text-emerald-400 flex items-center gap-1 font-mono">
                     <TrendingUp className="w-3 h-3" /> {m.change}
                   </span>
                 </div>
@@ -126,10 +125,10 @@ export const DashboardPage: React.FC = () => {
 
         {/* Action Panel & Platform Shortcuts */}
         <div className="space-y-6">
-          <Card className="bg-gradient-to-b from-slate-900 to-slate-950 border-slate-800 shadow-2xl relative overflow-hidden">
+          <Card className="bg-slate-900/70 backdrop-blur-xl border-slate-800/80 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2 text-base">
+              <CardTitle className="text-white flex items-center gap-2 text-base font-bold">
                 <Award className="w-5 h-5 text-indigo-400" />
                 Quick Operations
               </CardTitle>
@@ -145,15 +144,17 @@ export const DashboardPage: React.FC = () => {
                 </button>
               </Link>
               <Link to="/profile" className="block w-full">
-                <button className="w-full py-2.5 px-4 bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold rounded-xl transition text-left cursor-pointer flex items-center justify-between">
+                <button className="w-full py-2.5 px-4 bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold rounded-xl transition text-left cursor-pointer flex items-center justify-between">
                   <span>Update Profile Skill Matrix</span>
-                  <span className="text-[10px] font-mono-code text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">Edit</span>
+                  <span className="text-[10px] font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">Edit</span>
                 </button>
               </Link>
               <Link to="/applications" className="block w-full">
-                <button className="w-full py-2.5 px-4 bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold rounded-xl transition text-left cursor-pointer flex items-center justify-between">
+                <button className="w-full py-2.5 px-4 bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold rounded-xl transition text-left cursor-pointer flex items-center justify-between">
                   <span>Review Submitted Applications</span>
-                  <span className="text-[10px] font-mono-code text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">92%</span>
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                    {stats.totalApplications}
+                  </span>
                 </button>
               </Link>
             </CardContent>
@@ -163,3 +164,4 @@ export const DashboardPage: React.FC = () => {
     </div>
   );
 };
+

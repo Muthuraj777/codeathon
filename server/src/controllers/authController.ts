@@ -4,6 +4,7 @@ import { OAuth2Client } from 'google-auth-library';
 import { User, IUser } from '../models/User.js';
 import { registerSchema, loginSchema, googleAuthSchema } from '../validations/authValidation.js';
 import { AuthRequest } from '../middleware/authMiddleware.js';
+import { verifyFirebaseToken } from '../config/firebaseAdmin.js';
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -90,10 +91,21 @@ export const googleAuth = async (req: Request, res: Response, next: NextFunction
 
     let payload: { email?: string; name?: string; sub?: string; picture?: string } | undefined;
 
+    // 0. Primary: Verify Firebase ID Token via Firebase Admin SDK
+    const firebaseDecoded = await verifyFirebaseToken(credential);
+    if (firebaseDecoded && firebaseDecoded.email) {
+      payload = {
+        email: firebaseDecoded.email,
+        name: firebaseDecoded.name || firebaseDecoded.email.split('@')[0],
+        sub: firebaseDecoded.uid,
+        picture: firebaseDecoded.picture || '',
+      };
+    }
+
     const cleanGoogleClientId = (process.env.GOOGLE_CLIENT_ID || '1037970145497-fs1i7gvdm8gl6iffa2161ed2dnmsrp54.apps.googleusercontent.com').replace(/^["']|["']$/g, '').trim();
 
-    // 1. Try official Google verifyIdToken
-    if (cleanGoogleClientId) {
+    // 1. Fallback: Official Google verifyIdToken
+    if (!payload && cleanGoogleClientId) {
       try {
         const ticket = await googleClient.verifyIdToken({
           idToken: credential,

@@ -7,7 +7,6 @@ import { ApplyJobModal } from '../components/applications/ApplyJobModal';
 import { Spinner } from '../components/ui/Spinner';
 import { Alert } from '../components/ui/Alert';
 import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
 import { User, Briefcase, RefreshCw, Send, Download, Sparkles } from 'lucide-react';
 
 export const SkillGapPage: React.FC = () => {

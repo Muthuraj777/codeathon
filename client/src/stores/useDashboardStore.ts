@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { DashboardStats } from '../types/application';
-import { dashboardApi, MOCK_DASHBOARD_STATS } from '../services/dashboardApi';
+import { dashboardApi, INITIAL_DASHBOARD_STATS } from '../services/dashboardApi';
 
 interface DashboardState {
   stats: DashboardStats;
@@ -11,7 +11,7 @@ interface DashboardState {
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
-  stats: MOCK_DASHBOARD_STATS,
+  stats: INITIAL_DASHBOARD_STATS,
   isLoading: false,
   error: null,
 
@@ -21,7 +21,8 @@ export const useDashboardStore = create<DashboardState>((set) => ({
       const data = await dashboardApi.getStats();
       set({ stats: data, isLoading: false });
     } catch {
-      set({ stats: MOCK_DASHBOARD_STATS, isLoading: false });
+      set({ stats: INITIAL_DASHBOARD_STATS, isLoading: false });
     }
   },
 }));
+
