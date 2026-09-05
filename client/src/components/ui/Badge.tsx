@@ -7,18 +7,18 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 export const Badge: React.FC<BadgeProps> = ({ className, children, variant = 'primary', ...props }) => {
   const variants = {
-    primary: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-    secondary: 'bg-slate-100 text-slate-800 border-slate-200',
-    success: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-    warning: 'bg-amber-100 text-amber-800 border-amber-200',
-    danger: 'bg-rose-100 text-rose-800 border-rose-200',
-    outline: 'bg-transparent text-slate-700 border-slate-300',
+    primary: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30 shadow-xs shadow-indigo-500/10',
+    secondary: 'bg-slate-800/80 text-slate-300 border-slate-700/60',
+    success: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30 shadow-xs shadow-emerald-500/10',
+    warning: 'bg-amber-500/10 text-amber-300 border-amber-500/30 shadow-xs shadow-amber-500/10',
+    danger: 'bg-rose-500/10 text-rose-300 border-rose-500/30 shadow-xs shadow-rose-500/10',
+    outline: 'bg-transparent text-slate-300 border-slate-700 hover:border-slate-500',
   };
 
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border transition-colors',
+        'inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border backdrop-blur-xs transition-all duration-200',
         variants[variant],
         className
       )}
