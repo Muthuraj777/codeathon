@@ -73,31 +73,31 @@ export const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-5xl mx-auto space-y-6 animate-fade-in text-[#0F172A]">
       {error && <Alert type="error" message={error} />}
 
-      {/* 21st.dev Profile Header Bento Card */}
+      {/* Profile Header Bento Card */}
       <Card className="glass-bento relative overflow-hidden">
-        <div className="absolute -top-10 -right-10 w-72 h-72 bg-blob-indigo pointer-events-none opacity-80" />
+        <div className="absolute -top-10 -right-10 w-72 h-72 bg-blob-blue pointer-events-none opacity-80" />
         <CardContent className="p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 relative z-10">
-          <div className="w-18 h-18 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex items-center justify-center text-2xl font-bold shadow-lg shadow-indigo-500/20 ring-1 ring-white/20 shrink-0">
+          <div className="w-18 h-18 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center text-2xl font-bold shadow-md shadow-blue-600/20 shrink-0">
             {user?.name ? user.name.charAt(0) : 'E'}
           </div>
           <div className="space-y-1.5 text-center sm:text-left flex-1">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">{user?.name || currentStudent?.name || 'Arun'}</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">{user?.name || currentStudent?.name || 'Arun'}</h1>
               <Badge variant="primary" dot className="capitalize font-mono">
                 {user?.role || 'Student'}
               </Badge>
             </div>
-            <p className="text-xs sm:text-sm font-medium text-indigo-400 flex items-center justify-center sm:justify-start gap-1">
-              <UserCheck className="w-4 h-4 text-indigo-400" />
+            <p className="text-xs sm:text-sm font-medium text-blue-600 flex items-center justify-center sm:justify-start gap-1">
+              <UserCheck className="w-4 h-4 text-blue-600" />
               {currentStudent?.jobTitle || 'Java Full Stack Developer'}
             </p>
-            <p className="text-xs text-zinc-400">{user?.email || currentStudent?.email}</p>
+            <p className="text-xs text-slate-500">{user?.email || currentStudent?.email}</p>
           </div>
 
-          <Button variant="glow" size="md" onClick={() => setShowAddForm(!showAddForm)} className="gap-1.5 shrink-0">
+          <Button variant="primary" size="md" onClick={() => setShowAddForm(!showAddForm)} className="gap-1.5 shrink-0">
             <Plus className="w-4 h-4" />
             <span>Add Skill Competency</span>
           </Button>
@@ -106,10 +106,10 @@ export const ProfilePage: React.FC = () => {
 
       {/* Add Skill Form Drawer */}
       {showAddForm && (
-        <Card className="glass-bento border-indigo-500/30">
+        <Card className="glass-bento border-blue-200">
           <CardHeader>
-            <CardTitle className="text-base text-white flex items-center gap-2 font-semibold">
-              <Sparkles className="w-4 h-4 text-indigo-400" />
+            <CardTitle className="text-base text-slate-900 flex items-center gap-2 font-semibold">
+              <Sparkles className="w-4 h-4 text-blue-600" />
               Add New Skill Competency Profile
             </CardTitle>
           </CardHeader>
@@ -117,18 +117,18 @@ export const ProfilePage: React.FC = () => {
             <form onSubmit={handleAddSkill} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-medium text-slate-700 uppercase tracking-wider mb-1.5">
                     Select Skill from Catalog *
                   </label>
                   <select
                     value={selectedSkillId}
                     onChange={(e) => setSelectedSkillId(e.target.value)}
                     required
-                    className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs sm:text-sm text-zinc-100 focus:outline-none cursor-pointer"
+                    className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none cursor-pointer"
                   >
                     <option value="">-- Choose a skill --</option>
                     {catalogSkills.map((sk) => (
-                      <option key={sk._id || sk.id} value={sk._id || sk.id} className="bg-zinc-900 text-zinc-100">
+                      <option key={sk._id || sk.id} value={sk._id || sk.id} className="bg-white text-slate-900">
                         {sk.name} ({sk.category})
                       </option>
                     ))}
@@ -136,13 +136,13 @@ export const ProfilePage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-zinc-300 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-medium text-slate-700 uppercase tracking-wider mb-1.5">
                     Proficiency Rating ({selectedProficiency}/5 &mdash; {getProficiencyLabel(selectedProficiency)})
                   </label>
                   <select
                     value={selectedProficiency}
                     onChange={(e) => setSelectedProficiency(Number(e.target.value))}
-                    className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs sm:text-sm text-zinc-100 focus:outline-none cursor-pointer"
+                    className="w-full px-3.5 py-2.5 glass-input rounded-xl text-xs sm:text-sm text-slate-900 focus:outline-none cursor-pointer"
                   >
                     <option value={1}>1 - Beginner</option>
                     <option value={2}>2 - Basic</option>
@@ -153,7 +153,7 @@ export const ProfilePage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-3 pt-2 border-t border-zinc-800/80">
+              <div className="flex justify-end gap-3 pt-2 border-t border-slate-200">
                 <Button type="button" variant="ghost" size="sm" onClick={() => setShowAddForm(false)}>
                   Cancel
                 </Button>
@@ -168,10 +168,10 @@ export const ProfilePage: React.FC = () => {
 
       {/* Skills Assessment Matrix */}
       <Card className="glass-bento">
-        <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-zinc-800/80">
+        <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-slate-200/80">
           <div>
-            <CardTitle className="flex items-center gap-2 text-white text-base font-semibold">
-              <Award className="w-4.5 h-4.5 text-indigo-400" />
+            <CardTitle className="flex items-center gap-2 text-[#0F172A] text-base font-semibold">
+              <Award className="w-4.5 h-4.5 text-[#2563EB]" />
               <span>Skill Proficiency Matrix</span>
             </CardTitle>
           </div>
@@ -182,12 +182,12 @@ export const ProfilePage: React.FC = () => {
 
         <CardContent className="p-6 space-y-4">
           {isLoading && studentSkills.length === 0 ? (
-            <div className="py-16 text-center text-zinc-500 text-xs flex flex-col items-center justify-center space-y-2">
-              <Loader2 className="w-6 h-6 animate-spin text-indigo-400" />
+            <div className="py-16 text-center text-slate-400 text-xs flex flex-col items-center justify-center space-y-2">
+              <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
               <span>Loading candidate skill profile...</span>
             </div>
           ) : studentSkills.length === 0 ? (
-            <div className="py-16 text-center text-zinc-500 text-xs">
+            <div className="py-16 text-center text-slate-400 text-xs">
               No skill competencies recorded yet. Click "Add Skill Competency" above to build your profile matrix.
             </div>
           ) : (
@@ -196,13 +196,13 @@ export const ProfilePage: React.FC = () => {
               return (
                 <div
                   key={skillId}
-                  className="p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-zinc-800/80 space-y-3 shadow-sm hover:border-zinc-700 transition"
+                  className="p-4 sm:p-5 rounded-2xl bg-white/80 border border-slate-200/80 space-y-3 shadow-2xs hover:border-slate-300 transition"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h4 className="font-semibold text-zinc-100 text-sm sm:text-base">{s.name}</h4>
-                      <span className="text-xs text-zinc-400">
-                        Category: <strong className="text-indigo-400 font-medium">{s.category}</strong>
+                      <h4 className="font-semibold text-slate-900 text-sm sm:text-base">{s.name}</h4>
+                      <span className="text-xs text-slate-500">
+                        Category: <strong className="text-blue-600 font-medium">{s.category}</strong>
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -211,7 +211,7 @@ export const ProfilePage: React.FC = () => {
                       </Badge>
                       <button
                         onClick={() => handleRemoveSkill(skillId)}
-                        className="p-1.5 text-zinc-500 hover:text-rose-400 transition rounded-lg hover:bg-zinc-800 cursor-pointer"
+                        className="p-1.5 text-slate-400 hover:text-rose-600 transition rounded-lg hover:bg-slate-100 cursor-pointer"
                         title="Remove skill competency"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -221,26 +221,26 @@ export const ProfilePage: React.FC = () => {
 
                   {/* Interactive Graphical 5-Level Progress Segment Bar */}
                   <div className="space-y-1.5 pt-1">
-                    <div className="w-full h-3 bg-zinc-950 rounded-full overflow-hidden flex border border-zinc-800/80 p-0.5">
+                    <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex border border-slate-200 p-0.5">
                       {[1, 2, 3, 4, 5].map((lvl) => (
                         <div
                           key={lvl}
                           onClick={() => handleLevelClick(skillId, lvl)}
-                          className={`h-full flex-1 border-r last:border-r-0 border-zinc-950 cursor-pointer transition-all duration-200 ${
+                          className={`h-full flex-1 border-r last:border-r-0 border-slate-100 cursor-pointer transition-all duration-200 ${
                             lvl <= s.proficiency
-                              ? 'bg-gradient-to-r from-indigo-500 to-indigo-600 hover:brightness-110'
-                              : 'bg-zinc-900 hover:bg-zinc-800'
+                              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110'
+                              : 'bg-slate-200/60 hover:bg-slate-300/60'
                           }`}
                           title={`Click to set proficiency to level ${lvl}`}
                         />
                       ))}
                     </div>
-                    <div className="flex justify-between text-[10px] text-zinc-400 font-mono px-0.5 select-none">
-                      <span className="cursor-pointer hover:text-indigo-300" onClick={() => handleLevelClick(skillId, 1)}>1 (Beginner)</span>
-                      <span className="cursor-pointer hover:text-indigo-300" onClick={() => handleLevelClick(skillId, 2)}>2 (Basic)</span>
-                      <span className="cursor-pointer hover:text-indigo-300" onClick={() => handleLevelClick(skillId, 3)}>3 (Intermediate)</span>
-                      <span className="cursor-pointer hover:text-indigo-300" onClick={() => handleLevelClick(skillId, 4)}>4 (Advanced)</span>
-                      <span className="cursor-pointer hover:text-indigo-300" onClick={() => handleLevelClick(skillId, 5)}>5 (Expert)</span>
+                    <div className="flex justify-between text-[10px] text-slate-400 font-mono px-0.5 select-none">
+                      <span className="cursor-pointer hover:text-blue-600" onClick={() => handleLevelClick(skillId, 1)}>1 (Beginner)</span>
+                      <span className="cursor-pointer hover:text-blue-600" onClick={() => handleLevelClick(skillId, 2)}>2 (Basic)</span>
+                      <span className="cursor-pointer hover:text-blue-600" onClick={() => handleLevelClick(skillId, 3)}>3 (Intermediate)</span>
+                      <span className="cursor-pointer hover:text-blue-600" onClick={() => handleLevelClick(skillId, 4)}>4 (Advanced)</span>
+                      <span className="cursor-pointer hover:text-blue-600" onClick={() => handleLevelClick(skillId, 5)}>5 (Expert)</span>
                     </div>
                   </div>
                 </div>

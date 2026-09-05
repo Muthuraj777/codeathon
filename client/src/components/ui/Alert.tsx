@@ -12,17 +12,17 @@ export interface AlertProps {
 
 export const Alert: React.FC<AlertProps> = ({ type = 'info', title, message, onClose, className }) => {
   const styles = {
-    success: 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200',
-    error: 'bg-rose-950/30 border-rose-500/30 text-rose-200',
-    warning: 'bg-amber-950/30 border-amber-500/30 text-amber-200',
-    info: 'bg-indigo-950/30 border-indigo-500/30 text-indigo-200',
+    success: 'bg-emerald-50/90 border-emerald-200 text-emerald-900',
+    error: 'bg-rose-50/90 border-rose-200 text-rose-900',
+    warning: 'bg-amber-50/90 border-amber-200 text-amber-900',
+    info: 'bg-blue-50/90 border-blue-200 text-blue-900',
   };
 
   const iconColors = {
-    success: 'text-emerald-400',
-    error: 'text-rose-400',
-    warning: 'text-amber-400',
-    info: 'text-indigo-400',
+    success: 'text-emerald-600',
+    error: 'text-rose-600',
+    warning: 'text-amber-600',
+    info: 'text-blue-600',
   };
 
   const icons = {
@@ -37,7 +37,7 @@ export const Alert: React.FC<AlertProps> = ({ type = 'info', title, message, onC
   return (
     <div
       className={cn(
-        'p-4 rounded-2xl border backdrop-blur-xl shadow-lg flex items-start justify-between gap-3 text-xs sm:text-sm animate-in fade-in slide-in-from-top-1 duration-200',
+        'p-4 rounded-2xl border backdrop-blur-md shadow-sm flex items-start justify-between gap-3 text-xs sm:text-sm animate-in fade-in slide-in-from-top-1 duration-200',
         styles[type],
         className
       )}
@@ -52,7 +52,7 @@ export const Alert: React.FC<AlertProps> = ({ type = 'info', title, message, onC
       {onClose && (
         <button
           onClick={onClose}
-          className="text-zinc-400 hover:text-white p-1 transition rounded-lg hover:bg-white/10 shrink-0 cursor-pointer"
+          className="text-slate-400 hover:text-slate-700 p-1 transition rounded-lg hover:bg-slate-200/50 shrink-0 cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>

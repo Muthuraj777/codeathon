@@ -24,15 +24,11 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     setErrorMsg(null);
 
     try {
-      // 1. Trigger Firebase Google Popup Sign In
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-
-      // 2. Obtain Firebase ID Token
       const idToken = await user.getIdToken();
 
       if (idToken) {
-        // 3. Authenticate with backend
         const success = await googleLogin(idToken);
         if (success) {
           if (onSuccess) onSuccess();
@@ -70,7 +66,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       <Button
         type="button"
         variant="outline"
-        className="w-full bg-zinc-900/90 text-zinc-200 hover:bg-zinc-800 hover:text-white border-zinc-800 font-medium text-xs h-10 flex items-center justify-center gap-2.5 cursor-pointer transition shadow-sm"
+        className="w-full bg-white text-slate-700 hover:bg-slate-50 border-slate-200 font-medium text-xs h-10 flex items-center justify-center gap-2.5 cursor-pointer transition shadow-2xs"
         onClick={handleFirebaseGoogleLogin}
         isLoading={isFirebaseLoading}
       >
@@ -95,7 +91,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         {label}
       </Button>
 
-      {errorMsg && <p className="text-rose-400 text-xs mt-1.5 text-center font-medium">{errorMsg}</p>}
+      {errorMsg && <p className="text-rose-600 text-xs mt-1.5 text-center font-medium">{errorMsg}</p>}
     </div>
   );
 };

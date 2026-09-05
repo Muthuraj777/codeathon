@@ -17,25 +17,25 @@ export const Badge: React.FC<BadgeProps> = ({
     'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-tight border transition-colors select-none';
 
   const variants = {
-    primary: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30',
-    purple: 'bg-purple-500/10 text-purple-300 border-purple-500/30',
-    secondary: 'bg-zinc-800/80 text-zinc-300 border-zinc-700/60',
-    success: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
-    warning: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
-    danger: 'bg-rose-500/10 text-rose-300 border-rose-500/30',
-    info: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30',
-    neutral: 'bg-zinc-900/90 text-zinc-400 border-zinc-800',
+    primary: 'bg-blue-50 text-blue-700 border-blue-200/90',
+    purple: 'bg-purple-50 text-purple-700 border-purple-200/90',
+    secondary: 'bg-slate-100 text-slate-700 border-slate-200',
+    success: 'bg-emerald-50 text-emerald-700 border-emerald-200/90',
+    warning: 'bg-amber-50 text-amber-800 border-amber-200/90',
+    danger: 'bg-rose-50 text-rose-700 border-rose-200/90',
+    info: 'bg-cyan-50 text-cyan-700 border-cyan-200/90',
+    neutral: 'bg-slate-100 text-slate-600 border-slate-200',
   };
 
   const dotColors = {
-    primary: 'bg-indigo-400',
-    purple: 'bg-purple-400',
-    secondary: 'bg-zinc-400',
-    success: 'bg-emerald-400',
-    warning: 'bg-amber-400',
-    danger: 'bg-rose-400',
-    info: 'bg-cyan-400',
-    neutral: 'bg-zinc-500',
+    primary: 'bg-blue-600',
+    purple: 'bg-purple-600',
+    secondary: 'bg-slate-500',
+    success: 'bg-emerald-600',
+    warning: 'bg-amber-600',
+    danger: 'bg-rose-600',
+    info: 'bg-cyan-600',
+    neutral: 'bg-slate-400',
   };
 
   return (

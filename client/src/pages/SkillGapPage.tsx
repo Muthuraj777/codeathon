@@ -51,14 +51,14 @@ export const SkillGapPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
             <span>AI Competency Gap Engine</span>
           </Badge>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-            <Target className="w-7 h-7 text-indigo-400" />
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight flex items-center gap-3">
+            <Target className="w-7 h-7 text-[#2563EB]" />
             <span>Competency Gap Analysis</span>
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Select a candidate profile and target job role to calculate real-time proficiency gaps and match metrics.
           </p>
         </div>
@@ -68,9 +68,9 @@ export const SkillGapPage: React.FC = () => {
           size="md"
           onClick={() => runAnalysis()}
           isLoading={isLoading}
-          className="gap-2 shrink-0 border-zinc-800 bg-zinc-900/60"
+          className="gap-2 shrink-0 border-slate-200 bg-white"
         >
-          <RefreshCw className="w-4 h-4 text-indigo-400" />
+          <RefreshCw className="w-4 h-4 text-blue-600" />
           <span>Recalculate Matrix</span>
         </Button>
       </div>
@@ -80,17 +80,17 @@ export const SkillGapPage: React.FC = () => {
       {/* Candidate & Job Selector Bento Toolbar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-7 glass-bento rounded-3xl">
         <div className="space-y-2">
-          <label className="block text-xs font-medium text-zinc-300 uppercase tracking-wider flex items-center gap-2">
-            <User className="w-4 h-4 text-indigo-400" />
+          <label className="block text-xs font-medium text-slate-700 uppercase tracking-wider flex items-center gap-2">
+            <User className="w-4 h-4 text-blue-600" />
             Select Employee / Candidate Profile
           </label>
           <select
             value={selectedStudentId}
             onChange={(e) => setSelectedStudentId(e.target.value)}
-            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-zinc-100 focus:outline-none transition cursor-pointer"
+            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer"
           >
             {students.map((s) => (
-              <option key={s.id} value={s.id} className="bg-zinc-900 text-zinc-100">
+              <option key={s.id} value={s.id} className="bg-white text-slate-900">
                 {s.name} ({s.roleTitle})
               </option>
             ))}
@@ -98,17 +98,17 @@ export const SkillGapPage: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="block text-xs font-medium text-zinc-300 uppercase tracking-wider flex items-center gap-2">
-            <Briefcase className="w-4 h-4 text-purple-400" />
+          <label className="block text-xs font-medium text-slate-700 uppercase tracking-wider flex items-center gap-2">
+            <Briefcase className="w-4 h-4 text-purple-600" />
             Select Target Job Benchmark
           </label>
           <select
             value={selectedJobId}
             onChange={(e) => setSelectedJobId(e.target.value)}
-            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-zinc-100 focus:outline-none transition cursor-pointer"
+            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer"
           >
             {jobs.map((j) => (
-              <option key={j.id} value={j.id} className="bg-zinc-900 text-zinc-100">
+              <option key={j.id} value={j.id} className="bg-white text-slate-900">
                 {j.title} &mdash; {j.company}
               </option>
             ))}
@@ -141,18 +141,18 @@ export const SkillGapPage: React.FC = () => {
           {/* Bottom Action Bar Bento Card */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 glass-bento rounded-3xl">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+              <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-600">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-xs font-semibold text-zinc-100">Assessment Ready</h4>
-                <p className="text-[11px] text-zinc-400">Calculated overall candidate match score of {analysisResult.overallMatchScore}%.</p>
+                <h4 className="text-xs font-semibold text-slate-900">Assessment Ready</h4>
+                <p className="text-[11px] text-slate-500">Calculated overall candidate match score of {analysisResult.overallMatchScore}%.</p>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-              <Button variant="outline" size="md" className="w-full sm:w-auto gap-2 border-zinc-800">
-                <Download className="w-4 h-4 text-indigo-400" />
+              <Button variant="outline" size="md" className="w-full sm:w-auto gap-2 border-slate-200 bg-white">
+                <Download className="w-4 h-4 text-blue-600" />
                 <span>Export PDF</span>
               </Button>
               <Button

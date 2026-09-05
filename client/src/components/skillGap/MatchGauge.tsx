@@ -2,7 +2,6 @@ import React from 'react';
 import { Sparkles, CheckCircle2, Target } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
-
 interface MatchGaugeProps {
   score: number; // 0 to 100
   matchedCount: number;
@@ -13,21 +12,21 @@ export const MatchGauge: React.FC<MatchGaugeProps> = ({ score, matchedCount, tot
   const strokeDashoffset = 283 - (283 * score) / 100;
 
   const getScoreColor = () => {
-    if (score >= 80) return { text: 'text-emerald-400', ring: 'stroke-emerald-500', bg: 'bg-emerald-500/10', label: 'High Competency Match' };
-    if (score >= 60) return { text: 'text-indigo-400', ring: 'stroke-indigo-500', bg: 'bg-indigo-500/10', label: 'Good Proficiency Match' };
-    if (score >= 40) return { text: 'text-amber-400', ring: 'stroke-amber-500', bg: 'bg-amber-500/10', label: 'Moderate Skill Deficit' };
-    return { text: 'text-rose-400', ring: 'stroke-rose-500', bg: 'bg-rose-500/10', label: 'Significant Competency Gap' };
+    if (score >= 80) return { text: 'text-emerald-600', ring: 'stroke-emerald-600', label: 'High Competency Match' };
+    if (score >= 60) return { text: 'text-blue-600', ring: 'stroke-blue-600', label: 'Good Proficiency Match' };
+    if (score >= 40) return { text: 'text-amber-600', ring: 'stroke-amber-600', label: 'Moderate Skill Deficit' };
+    return { text: 'text-rose-600', ring: 'stroke-rose-600', label: 'Significant Competency Gap' };
   };
 
   const statusInfo = getScoreColor();
 
   return (
-    <div className="h-full flex flex-col justify-between p-6 sm:p-7 glass-bento rounded-3xl text-white relative overflow-hidden space-y-6">
-      <div className="absolute top-0 right-0 w-48 h-48 bg-blob-indigo pointer-events-none opacity-80" />
+    <div className="h-full flex flex-col justify-between p-6 sm:p-7 glass-bento rounded-3xl text-[#0F172A] relative overflow-hidden space-y-6">
+      <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 pointer-events-none opacity-80" />
 
       <div className="flex items-center justify-between relative z-10">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-400 flex items-center gap-1.5">
-          <Target className="w-3.5 h-3.5 text-indigo-400" /> Overall Job Readiness Rating
+        <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+          <Target className="w-3.5 h-3.5 text-[#2563EB]" /> Overall Job Readiness Rating
         </span>
         <Badge variant="primary" dot className="text-[10px] font-mono">
           AI Evaluated
@@ -42,7 +41,7 @@ export const MatchGauge: React.FC<MatchGaugeProps> = ({ score, matchedCount, tot
               cx="50"
               cy="50"
               r="45"
-              className="stroke-zinc-950"
+              className="stroke-slate-200"
               strokeWidth="8"
               fill="transparent"
             />
@@ -60,31 +59,31 @@ export const MatchGauge: React.FC<MatchGaugeProps> = ({ score, matchedCount, tot
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
             <span className={`text-3xl font-extrabold ${statusInfo.text} font-mono`}>{score}%</span>
-            <span className="text-[9px] uppercase font-semibold text-zinc-400 tracking-wider">Score</span>
+            <span className="text-[9px] uppercase font-semibold text-slate-400 tracking-wider">Score</span>
           </div>
         </div>
 
         <div className="text-center mt-3 space-y-1">
-          <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">{statusInfo.label}</h3>
-          <p className="text-xs text-zinc-400">
-            Satisfies <strong className="text-indigo-300 font-mono">{matchedCount}</strong> of{' '}
-            <strong className="text-zinc-100 font-mono">{totalCount}</strong> required skills
+          <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">{statusInfo.label}</h3>
+          <p className="text-xs text-slate-500">
+            Satisfies <strong className="text-blue-600 font-mono">{matchedCount}</strong> of{' '}
+            <strong className="text-slate-800 font-mono">{totalCount}</strong> required skills
           </p>
         </div>
       </div>
 
-      <div className="space-y-2 pt-2 border-t border-zinc-800/80 text-xs text-zinc-400 relative z-10">
-        <div className="flex items-center justify-between bg-zinc-950/80 px-3 py-2 rounded-xl border border-zinc-800">
+      <div className="space-y-2 pt-2 border-t border-slate-200/80 text-xs text-slate-500 relative z-10">
+        <div className="flex items-center justify-between bg-white/80 px-3 py-2 rounded-xl border border-slate-200/80">
           <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> Mandatory Weight
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Mandatory Weight
           </span>
-          <strong className="text-zinc-200 font-mono">2.0x</strong>
+          <strong className="text-slate-800 font-mono">2.0x</strong>
         </div>
-        <div className="flex items-center justify-between bg-zinc-950/80 px-3 py-2 rounded-xl border border-zinc-800">
+        <div className="flex items-center justify-between bg-white/80 px-3 py-2 rounded-xl border border-slate-200/80">
           <span className="flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" /> Optional Weight
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" /> Optional Weight
           </span>
-          <strong className="text-zinc-200 font-mono">1.0x</strong>
+          <strong className="text-slate-800 font-mono">1.0x</strong>
         </div>
       </div>
     </div>

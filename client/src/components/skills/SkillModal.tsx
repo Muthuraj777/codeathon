@@ -74,24 +74,24 @@ export const SkillModal: React.FC<SkillModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/80 backdrop-blur-md animate-fade-in">
-      <div className="bg-zinc-900/95 border border-zinc-800 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl backdrop-blur-2xl">
-        <div className="flex items-center justify-between p-5 border-b border-zinc-800/80 bg-zinc-950/60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl backdrop-blur-2xl text-[#0F172A]">
+        <div className="flex items-center justify-between p-5 border-b border-slate-200 bg-slate-50">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400">
+            <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
               <Code2 className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-zinc-100 text-base flex items-center gap-1.5">
+              <h3 className="font-semibold text-slate-900 text-base flex items-center gap-1.5">
                 <span>{initialData ? 'Edit Skill Profile' : 'Create New Skill'}</span>
-                <Sparkles className="w-4 h-4 text-indigo-400" />
+                <Sparkles className="w-4 h-4 text-blue-600" />
               </h3>
-              <p className="text-[11px] text-zinc-400">Define technical competency criteria</p>
+              <p className="text-[11px] text-slate-500">Define technical competency criteria</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition cursor-pointer"
+            className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -99,7 +99,7 @@ export const SkillModal: React.FC<SkillModalProps> = ({
 
         <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 text-xs bg-rose-950/40 border border-rose-800/80 text-rose-200 rounded-xl">
+            <div className="p-3 text-xs bg-rose-50 border border-rose-200 text-rose-800 rounded-xl">
               {error}
             </div>
           )}
@@ -112,36 +112,36 @@ export const SkillModal: React.FC<SkillModalProps> = ({
           />
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs font-medium text-slate-700 mb-1.5">
               Domain Category *
             </label>
             <select
               {...register('category')}
-              className="w-full px-3.5 py-2.5 glass-input rounded-xl text-zinc-100 text-xs sm:text-sm focus:outline-none transition cursor-pointer"
+              className="w-full px-3.5 py-2.5 glass-input rounded-xl text-slate-900 text-xs sm:text-sm focus:outline-none transition cursor-pointer"
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat} className="bg-zinc-900 text-zinc-100">
+                <option key={cat} value={cat} className="bg-white text-slate-900">
                   {cat}
                 </option>
               ))}
             </select>
-            {errors.category && <p className="mt-1 text-xs text-rose-400">{errors.category.message}</p>}
+            {errors.category && <p className="mt-1 text-xs text-rose-600">{errors.category.message}</p>}
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs font-medium text-slate-700 mb-1.5">
               Description (Optional)
             </label>
             <textarea
               {...register('description')}
               rows={3}
               placeholder="Brief summary or proficiency description of the technology..."
-              className="w-full px-3.5 py-2.5 glass-input rounded-xl text-zinc-100 placeholder:text-zinc-500 text-xs sm:text-sm resize-none transition"
+              className="w-full px-3.5 py-2.5 glass-input rounded-xl text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm resize-none transition"
             />
-            {errors.description && <p className="mt-1 text-xs text-rose-400">{errors.description.message}</p>}
+            {errors.description && <p className="mt-1 text-xs text-rose-600">{errors.description.message}</p>}
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-800/80">
+          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-200">
             <Button type="button" variant="ghost" size="sm" onClick={onClose}>
               Cancel
             </Button>

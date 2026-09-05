@@ -58,24 +58,24 @@ export const SkillsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-7xl mx-auto">
+    <div className="space-y-6 animate-fade-in max-w-7xl mx-auto text-[#0F172A]">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
             <span>Technical Taxonomy Catalog</span>
           </Badge>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
-            <Code2 className="h-7 w-7 text-indigo-400" />
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight flex items-center gap-3">
+            <Code2 className="h-7 w-7 text-[#2563EB]" />
             <span>Skills Directory</span>
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Manage organization-wide technical competencies, category definitions, and proficiency taxonomy.
           </p>
         </div>
 
-        <Button variant="glow" onClick={handleOpenAddModal} className="gap-2 shrink-0">
+        <Button variant="primary" onClick={handleOpenAddModal} className="gap-2 shrink-0">
           <Plus className="h-4 w-4" />
           <span>Add New Skill</span>
         </Button>
@@ -97,7 +97,7 @@ export const SkillsPage: React.FC = () => {
 
         {/* Categories Bar */}
         <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
-          <Filter className="h-4 w-4 text-zinc-500 mr-1 shrink-0" />
+          <Filter className="h-4 w-4 text-slate-400 mr-1 shrink-0" />
           {categories.map((cat) => {
             const isSelected = selectedCategory === cat;
             return (
@@ -106,8 +106,8 @@ export const SkillsPage: React.FC = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition cursor-pointer select-none ${
                   isSelected
-                    ? 'bg-zinc-800 text-white font-semibold shadow-sm border border-zinc-700'
-                    : 'bg-zinc-950/80 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800'
+                    ? 'bg-[#2563EB] text-white font-semibold shadow-xs'
+                    : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 border border-slate-200'
                 }`}
               >
                 {cat}
@@ -119,15 +119,15 @@ export const SkillsPage: React.FC = () => {
 
       {/* Skills Bento Grid */}
       {isLoading && skills.length === 0 ? (
-        <div className="py-24 text-center text-zinc-500 text-xs flex flex-col items-center justify-center space-y-3">
-          <div className="w-7 h-7 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+        <div className="py-24 text-center text-slate-500 text-xs flex flex-col items-center justify-center space-y-3">
+          <div className="w-7 h-7 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
           <span>Fetching technical skills catalog...</span>
         </div>
       ) : skills.length === 0 ? (
         <div className="py-20 text-center glass-bento rounded-3xl p-12">
-          <Layers className="h-12 w-12 text-zinc-600 mx-auto mb-3" />
-          <h3 className="text-zinc-200 font-semibold text-base">No Skills Found</h3>
-          <p className="text-xs text-zinc-400 mt-1 max-w-sm mx-auto">
+          <Layers className="h-12 w-12 text-slate-300 mx-auto mb-3" />
+          <h3 className="text-slate-800 font-semibold text-base">No Skills Found</h3>
+          <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
             No technical skills matching your current search or category filter. Try clearing filters or create a new skill entry.
           </p>
         </div>
@@ -142,29 +142,29 @@ export const SkillsPage: React.FC = () => {
               >
                 <div className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-semibold text-zinc-100 text-sm sm:text-base group-hover:text-indigo-300 transition line-clamp-1">
+                    <h3 className="font-semibold text-slate-900 text-sm sm:text-base group-hover:text-blue-600 transition line-clamp-1">
                       {skill.name}
                     </h3>
                     <Badge variant="neutral" className="text-[10px] font-mono shrink-0">
                       {skill.category}
                     </Badge>
                   </div>
-                  <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
                     {skill.description || 'No detailed description specified.'}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-end space-x-2 pt-4 mt-4 border-t border-zinc-800/60">
+                <div className="flex items-center justify-end space-x-2 pt-4 mt-4 border-t border-slate-200/80">
                   <button
                     onClick={() => handleOpenEditModal(skill)}
-                    className="p-1.5 text-zinc-400 hover:text-indigo-300 hover:bg-zinc-800/80 rounded-xl transition cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
                     title="Edit Skill"
                   >
                     <Edit2 className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(skillId)}
-                    className="p-1.5 text-zinc-400 hover:text-rose-400 hover:bg-zinc-800/80 rounded-xl transition cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-xl transition cursor-pointer"
                     title="Delete Skill"
                   >
                     <Trash2 className="h-4 w-4" />

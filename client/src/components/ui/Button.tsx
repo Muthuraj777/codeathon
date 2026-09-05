@@ -11,22 +11,22 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, children, variant = 'primary', size = 'md', isLoading = false, disabled, ...props }, ref) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:opacity-50 disabled:pointer-events-none cursor-pointer active:scale-[0.98] select-none';
+      'inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100 disabled:opacity-50 disabled:pointer-events-none cursor-pointer active:scale-[0.98] select-none';
 
     const variants = {
       primary:
-        'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 border border-indigo-500/40 focus-visible:ring-indigo-500',
+        'bg-[#2563EB] hover:bg-blue-700 text-white shadow-sm shadow-blue-600/20 border border-blue-600/40 focus-visible:ring-blue-600',
       secondary:
-        'bg-zinc-800/90 text-zinc-100 hover:bg-zinc-700/90 border border-zinc-700/80 focus-visible:ring-zinc-700 shadow-sm',
+        'bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200/90 focus-visible:ring-slate-300 shadow-2xs',
       outline:
-        'border border-zinc-800 bg-zinc-900/60 text-zinc-200 hover:bg-zinc-800/90 hover:text-white hover:border-zinc-700 focus-visible:ring-indigo-500 backdrop-blur-md',
-      ghost: 'bg-transparent text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-100 focus-visible:ring-zinc-800',
+        'border border-slate-200 bg-white/80 text-slate-700 hover:bg-white hover:text-slate-900 hover:border-slate-300 focus-visible:ring-blue-600 backdrop-blur-md',
+      ghost: 'bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-slate-200',
       danger:
-        'bg-rose-600/90 text-white hover:bg-rose-500 focus-visible:ring-rose-500 shadow-md shadow-rose-600/20 border border-rose-500/30',
+        'bg-rose-600 text-white hover:bg-rose-700 focus-visible:ring-rose-600 shadow-sm shadow-rose-600/20 border border-rose-500/30',
       success:
-        'bg-emerald-600/90 text-white hover:bg-emerald-500 focus-visible:ring-emerald-500 shadow-md shadow-emerald-600/20 border border-emerald-500/30',
+        'bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:ring-emerald-600 shadow-sm shadow-emerald-600/20 border border-emerald-500/30',
       glow:
-        'bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 text-white hover:opacity-95 shadow-lg shadow-indigo-500/25 border border-white/20 focus-visible:ring-purple-500',
+        'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 text-white hover:opacity-95 shadow-md shadow-blue-600/25 border border-blue-400/30 focus-visible:ring-blue-600',
     };
 
     const sizes = {
