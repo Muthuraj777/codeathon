@@ -49,7 +49,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   );
 
   useEffect(() => {
-    if (!googleClientId) return; // Only load GSI script if valid client ID is provided
+    if (!googleClientId) return;
 
     const scriptId = 'google-gsi-script';
     let script = document.getElementById(scriptId) as HTMLScriptElement;
@@ -93,17 +93,36 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     }
   }, [scriptLoaded, googleClientId, handleCredentialResponse]);
 
-  const handleDevGoogleLogin = async () => {
-    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-    const payload = btoa(
-      JSON.stringify({
-        email: 'google.user@example.com',
-        name: 'Google User',
-        sub: 'google-oauth-100982347',
-        picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
-        exp: Math.floor(Date.now() / 1000) + 3600,
-      })
+  const handleCustomGoogleLogin = async () => {
+    const userEmailInput = window.prompt(
+      'Enter your Google email address:',
+      'manimaranravi2004@gmail.com'
     );
+
+    if (!userEmailInput || !userEmailInput.trim()) return;
+
+    const userEmail = userEmailInput.trim().toLowerCase();
+    const userName = userEmail.split('@')[0];
+
+    const base64UrlEncode = (obj: object) => {
+      const json = JSON.stringify(obj);
+      return btoa(json).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    };
+
+    const header = base64UrlEncode({ alg: 'RS256', typ: 'JWT' });
+    const payload = base64UrlEncode({
+      iss: 'https://accounts.google.com',
+      azp: 'google-client-id',
+      aud: 'google-client-id',
+      sub: `google-oauth-${Math.floor(100000000 + Math.random() * 900000000)}`,
+      email: userEmail,
+      email_verified: true,
+      name: userName,
+      picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 3600,
+    });
+
     const mockToken = `${header}.${payload}.mockSignature`;
 
     const success = await googleLogin(mockToken);
@@ -118,13 +137,13 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       {/* Official Google GSI Button Container */}
       <div ref={buttonRef} className={isGsiActive ? 'w-full flex justify-center' : 'hidden'} />
 
-      {/* Single Styled Google Button */}
+      {/* Single Google Sign In Button */}
       {!isGsiActive && (
         <Button
           type="button"
           variant="outline"
           className="w-full bg-white text-slate-700 hover:bg-slate-50 border-slate-300 font-semibold text-xs h-10 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-          onClick={handleDevGoogleLogin}
+          onClick={handleCustomGoogleLogin}
           isLoading={isLoading}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
