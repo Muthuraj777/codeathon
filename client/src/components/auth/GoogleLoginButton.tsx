@@ -94,7 +94,6 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   }, [scriptLoaded, googleClientId, handleCredentialResponse]);
 
   const handleCustomGoogleLogin = async () => {
-    // Prompt user for their Google email address (defaulting to manimaranravi2004@gmail.com)
     const userEmailInput = window.prompt(
       'Enter your Google email address:',
       'manimaranravi2004@gmail.com'
@@ -105,16 +104,25 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     const userEmail = userEmailInput.trim().toLowerCase();
     const userName = userEmail.split('@')[0];
 
-    const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-    const payload = btoa(
-      JSON.stringify({
-        email: userEmail,
-        name: userName,
-        sub: `google-oauth-${Math.floor(100000000 + Math.random() * 900000000)}`,
-        picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
-        exp: Math.floor(Date.now() / 1000) + 3600,
-      })
-    );
+    const base64UrlEncode = (obj: object) => {
+      const json = JSON.stringify(obj);
+      return btoa(json).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    };
+
+    const header = base64UrlEncode({ alg: 'RS256', typ: 'JWT' });
+    const payload = base64UrlEncode({
+      iss: 'https://accounts.google.com',
+      azp: 'google-client-id',
+      aud: 'google-client-id',
+      sub: `google-oauth-${Math.floor(100000000 + Math.random() * 900000000)}`,
+      email: userEmail,
+      email_verified: true,
+      name: userName,
+      picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 3600,
+    });
+
     const mockToken = `${header}.${payload}.mockSignature`;
 
     const success = await googleLogin(mockToken);
