@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/Button';
+import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
 declare global {
   interface Window {
@@ -31,6 +32,7 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
   const buttonRef = useRef<HTMLDivElement>(null);
   const [scriptLoaded, setScriptLoaded] = useState(() => typeof window !== 'undefined' && !!window.google?.accounts);
   const [isGsiActive, setIsGsiActive] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -93,57 +95,18 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
     }
   }, [scriptLoaded, googleClientId, handleCredentialResponse]);
 
-  const handleCustomGoogleLogin = async () => {
-    const userEmailInput = window.prompt(
-      'Enter your Google email address:',
-      'manimaranravi2004@gmail.com'
-    );
-
-    if (!userEmailInput || !userEmailInput.trim()) return;
-
-    const userEmail = userEmailInput.trim().toLowerCase();
-    const userName = userEmail.split('@')[0];
-
-    const base64UrlEncode = (obj: object) => {
-      const json = JSON.stringify(obj);
-      return btoa(json).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-    };
-
-    const header = base64UrlEncode({ alg: 'RS256', typ: 'JWT' });
-    const payload = base64UrlEncode({
-      iss: 'https://accounts.google.com',
-      azp: 'google-client-id',
-      aud: 'google-client-id',
-      sub: `google-oauth-${Math.floor(100000000 + Math.random() * 900000000)}`,
-      email: userEmail,
-      email_verified: true,
-      name: userName,
-      picture: 'https://lh3.googleusercontent.com/a/default-user=s96-c',
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + 3600,
-    });
-
-    const mockToken = `${header}.${payload}.mockSignature`;
-
-    const success = await googleLogin(mockToken);
-    if (success) {
-      if (onSuccess) onSuccess();
-      else navigate('/dashboard');
-    }
-  };
-
   return (
     <div className="w-full flex justify-center">
       {/* Official Google GSI Button Container */}
       <div ref={buttonRef} className={isGsiActive ? 'w-full flex justify-center' : 'hidden'} />
 
-      {/* Single Google Sign In Button */}
+      {/* Single Styled Google Button */}
       {!isGsiActive && (
         <Button
           type="button"
           variant="outline"
           className="w-full bg-white text-slate-700 hover:bg-slate-50 border-slate-300 font-semibold text-xs h-10 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
-          onClick={handleCustomGoogleLogin}
+          onClick={() => setIsModalOpen(true)}
           isLoading={isLoading}
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">
@@ -167,6 +130,13 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
           {label}
         </Button>
       )}
+
+      {/* Google Accounts Choose an Account Popup */}
+      <GoogleAccountChooserModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={onSuccess}
+      />
     </div>
   );
 };
