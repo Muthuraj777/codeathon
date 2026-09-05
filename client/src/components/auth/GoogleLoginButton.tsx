@@ -47,8 +47,10 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       } else if (err?.code === 'auth/configuration-not-found') {
         console.error('Firebase Auth Error: Google Sign-in provider is not enabled in Firebase Console.');
         setErrorMsg('Google Sign-In is not enabled under Firebase Console > Authentication > Sign-in method.');
+      } else if (err?.code === 'auth/internal-error' || err?.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+        console.error('Firebase Auth Error: Unable to resolve apis.google.com network script.');
+        setErrorMsg('Unable to connect to Google Auth servers (DNS/AdBlocker restriction). Please use demo login.');
       } else if (err?.code === 'auth/popup-blocked') {
-        // Fallback to redirect if popup is blocked by COOP or browser extension
         try {
           await signInWithRedirect(auth, googleProvider);
         } catch (redirectErr) {
