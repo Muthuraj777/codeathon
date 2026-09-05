@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
@@ -12,6 +13,7 @@ import applicationRoutes from './routes/applicationRoutes.js';
 import seedRoutes from './routes/seedRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import { errorHandler } from './middleware/errorMiddleware.js';
+import { responseTimeTracker, apiLimiter } from './middleware/performanceMiddleware.js';
 
 dotenv.config();
 
@@ -21,6 +23,9 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 connectDB();
 
+// Performance & Security Middleware
+app.use(responseTimeTracker);
+app.use(compression());
 app.use(helmet());
 app.use(
   cors({
@@ -28,8 +33,11 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
+
+// Rate Limiting for API routes
+app.use('/api', apiLimiter);
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -49,7 +57,7 @@ app.use(errorHandler);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Optimized Server running on port ${PORT}`);
   });
 }
 

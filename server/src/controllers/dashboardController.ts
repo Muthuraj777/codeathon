@@ -11,32 +11,33 @@ export class DashboardController {
    */
   public static async getStats(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      // 1. Counts
-      const studentCount = await Student.countDocuments();
-      const jobCount = await Job.countDocuments();
-      const applicationCount = await Application.countDocuments();
+      // 1. Parallel Count Queries for Maximum Performance
+      const [studentCount, jobCount, applicationCount] = await Promise.all([
+        Student.countDocuments(),
+        Job.countDocuments(),
+        Application.countDocuments(),
+      ]);
 
       const totalEmployees = studentCount > 0 ? studentCount : 250;
       const totalJobs = jobCount > 0 ? jobCount : 45;
       const totalApplications = applicationCount > 0 ? applicationCount : 120;
 
-      // 2. Average Match Percent Aggregation
-      let averageMatchPercent = 74;
-      if (applicationCount > 0) {
-        const avgResult = await Application.aggregate([
-          { $group: { _id: null, avgMatch: { $avg: '$match_percent' } } },
-        ]);
-        if (avgResult.length > 0 && avgResult[0].avgMatch) {
-          averageMatchPercent = Math.round(avgResult[0].avgMatch);
-        }
-      }
-
-      // 3. Top Skill Gaps Aggregation from Recommendations collection
-      const recAggregation = await Recommendation.aggregate([
-        { $group: { _id: '$skill_id', gapCount: { $sum: 1 } } },
-        { $sort: { gapCount: -1 } },
-        { $limit: 5 },
+      // 2. Parallel Execution for Aggregation Queries
+      const [avgResult, recAggregation] = await Promise.all([
+        applicationCount > 0
+          ? Application.aggregate([{ $group: { _id: null, avgMatch: { $avg: '$match_percent' } } }])
+          : Promise.resolve([]),
+        Recommendation.aggregate([
+          { $group: { _id: '$skill_id', gapCount: { $sum: 1 } } },
+          { $sort: { gapCount: -1 } },
+          { $limit: 5 },
+        ]),
       ]);
+
+      let averageMatchPercent = 74;
+      if (avgResult.length > 0 && avgResult[0].avgMatch) {
+        averageMatchPercent = Math.round(avgResult[0].avgMatch);
+      }
 
       let topSkillGaps: Array<{ skillName: string; gapCount: number; percentage: number; category: string }> = [];
 
@@ -45,7 +46,9 @@ export class DashboardController {
         const skillIds = recAggregation.map((r) => r._id);
         const skills = await Skill.find({
           $or: [{ skill_id: { $in: skillIds } }, { _id: { $in: skillIds } }],
-        }).lean();
+        })
+          .select('name category skill_id _id')
+          .lean();
 
         const skillMap = new Map<string, { name: string; category: string }>();
         for (const sk of skills) {
