@@ -1,10 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IRecommendation extends Document {
-  student_id: mongoose.Types.ObjectId | string;
-  job_id: mongoose.Types.ObjectId | string;
-  skill_id: mongoose.Types.ObjectId | string;
-  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+  student_id: mongoose.Types.ObjectId;
+  job_id: mongoose.Types.ObjectId;
+  skill_id: mongoose.Types.ObjectId;
+  priority: 'High' | 'Medium' | 'Low' | 'HIGH' | 'MEDIUM' | 'LOW';
   reason: string;
   current_level: number;
   target_level: number;
@@ -14,15 +14,51 @@ export interface IRecommendation extends Document {
 
 const RecommendationSchema = new Schema<IRecommendation>(
   {
-    student_id: { type: Schema.Types.Mixed, required: true, index: true },
-    job_id: { type: Schema.Types.Mixed, required: true, index: true },
-    skill_id: { type: Schema.Types.Mixed, required: true, index: true },
-    priority: { type: String, enum: ['HIGH', 'MEDIUM', 'LOW'], required: true },
-    reason: { type: String, required: true },
-    current_level: { type: Number, required: true },
-    target_level: { type: Number, required: true },
+    student_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Student',
+      required: [true, 'Student ID is required'],
+      index: true,
+    },
+    job_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Job',
+      required: [true, 'Job ID is required'],
+      index: true,
+    },
+    skill_id: {
+      type: Schema.Types.ObjectId,
+      ref: 'Skill',
+      required: [true, 'Skill ID is required'],
+    },
+    priority: {
+      type: String,
+      enum: ['High', 'Medium', 'Low', 'HIGH', 'MEDIUM', 'LOW'],
+      required: true,
+    },
+    reason: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    current_level: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 5,
+    },
+    target_level: {
+      type: Number,
+      required: true,
+      min: 1,
+      max: 5,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
+
+RecommendationSchema.index({ student_id: 1, job_id: 1, skill_id: 1 }, { unique: true });
 
 export const Recommendation = mongoose.model<IRecommendation>('Recommendation', RecommendationSchema);
