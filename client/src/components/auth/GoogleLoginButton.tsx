@@ -61,6 +61,16 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
       const params = new URLSearchParams(hash);
       const idToken = params.get('id_token');
       if (idToken) {
+        if (window.opener) {
+          try {
+            window.opener.postMessage({ type: 'GOOGLE_AUTH_SUCCESS', idToken }, window.location.origin);
+          } catch (e) {
+            console.warn('Failed to postMessage to opener:', e);
+          }
+          window.close();
+          return;
+        }
+
         googleLogin(idToken).then((success) => {
           if (success) {
             window.history.replaceState(null, '', window.location.pathname);
@@ -70,6 +80,23 @@ export const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({
         });
       }
     }
+  }, [googleLogin, navigate, onSuccess]);
+
+  // Listen for postMessage from Google OAuth popup window on main tab
+  useEffect(() => {
+    const handleMessage = async (event: MessageEvent) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === 'GOOGLE_AUTH_SUCCESS' && event.data?.idToken) {
+        const success = await googleLogin(event.data.idToken);
+        if (success) {
+          if (onSuccess) onSuccess();
+          else navigate('/dashboard');
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
   }, [googleLogin, navigate, onSuccess]);
 
   useEffect(() => {
