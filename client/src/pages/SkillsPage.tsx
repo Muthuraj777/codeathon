@@ -17,6 +17,7 @@ export const SkillsPage: React.FC = () => {
     isLoading,
     error,
     fetchSkills,
+    fetchCategories,
     createSkill,
     updateSkill,
     deleteSkill,
@@ -29,7 +30,8 @@ export const SkillsPage: React.FC = () => {
 
   useEffect(() => {
     fetchSkills();
-  }, [fetchSkills]);
+    fetchCategories();
+  }, [fetchSkills, fetchCategories]);
 
   const handleOpenAddModal = () => {
     setEditingSkill(null);

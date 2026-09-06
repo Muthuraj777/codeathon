@@ -38,10 +38,12 @@ export const SkillGapPage: React.FC = () => {
     );
   }
 
-  const selectedJob = jobs.find((j) => j.id === selectedJobId) || {
+  const getItemId = (item: any) => item?._id || item?.id || '';
+
+  const selectedJob = jobs.find((j) => getItemId(j) === selectedJobId) || {
     id: selectedJobId,
-    title: analysisResult?.jobTitle || 'Java Full Stack Developer',
-    company: 'ABC Technologies',
+    title: analysisResult?.jobTitle || 'Target Position',
+    company: 'Organization',
   };
 
   return (
@@ -63,6 +65,7 @@ export const SkillGapPage: React.FC = () => {
           size="md"
           onClick={() => runAnalysis()}
           isLoading={isLoading}
+          disabled={!selectedStudentId || !selectedJobId}
           className="gap-2 shrink-0 border-slate-200 bg-white"
         >
           <RefreshCw className="w-4 h-4 text-blue-600" />
@@ -82,13 +85,21 @@ export const SkillGapPage: React.FC = () => {
           <select
             value={selectedStudentId}
             onChange={(e) => setSelectedStudentId(e.target.value)}
-            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer"
+            disabled={students.length === 0}
+            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer disabled:opacity-50"
           >
-            {students.map((s) => (
-              <option key={s.id} value={s.id} className="bg-white text-slate-900">
-                {s.name} ({s.roleTitle})
-              </option>
-            ))}
+            {students.length === 0 ? (
+              <option value="">No candidates available</option>
+            ) : (
+              students.map((s) => {
+                const sId = getItemId(s);
+                return (
+                  <option key={sId} value={sId} className="bg-white text-slate-900">
+                    {s.name} {s.roleTitle ? `(${s.roleTitle})` : ''}
+                  </option>
+                );
+              })
+            )}
           </select>
         </div>
 
@@ -100,16 +111,25 @@ export const SkillGapPage: React.FC = () => {
           <select
             value={selectedJobId}
             onChange={(e) => setSelectedJobId(e.target.value)}
-            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer"
+            disabled={jobs.length === 0}
+            className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer disabled:opacity-50"
           >
-            {jobs.map((j) => (
-              <option key={j.id} value={j.id} className="bg-white text-slate-900">
-                {j.title} &mdash; {j.company}
-              </option>
-            ))}
+            {jobs.length === 0 ? (
+              <option value="">No job benchmarks available</option>
+            ) : (
+              jobs.map((j) => {
+                const jId = getItemId(j);
+                return (
+                  <option key={jId} value={jId} className="bg-white text-slate-900">
+                    {j.title} &mdash; {j.company}
+                  </option>
+                );
+              })
+            )}
           </select>
         </div>
       </div>
+
 
       {/* Asymmetrical Bento Grid Results View */}
       {analysisResult && (

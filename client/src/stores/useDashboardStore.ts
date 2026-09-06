@@ -20,8 +20,8 @@ export const useDashboardStore = create<DashboardState>((set) => ({
     try {
       const data = await dashboardApi.getStats();
       set({ stats: data, isLoading: false });
-    } catch {
-      set({ stats: INITIAL_DASHBOARD_STATS, isLoading: false });
+    } catch (err: any) {
+      set({ error: err.message || 'Failed to load dashboard metrics', isLoading: false });
     }
   },
 }));
