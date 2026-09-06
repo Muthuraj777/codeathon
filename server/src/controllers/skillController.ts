@@ -121,10 +121,13 @@ export const deleteSkill = async (req: Request, res: Response, next: NextFunctio
 
 export const getCategories = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const categories = ['Backend', 'Frontend', 'Database', 'Cloud', 'DevOps', 'Mobile', 'AI/ML', 'Other'];
+    const dbCategories = await Skill.distinct('category');
+    const defaultCategories = ['Backend', 'Frontend', 'Database', 'Cloud', 'DevOps', 'Mobile', 'AI/ML', 'Other'];
+    const combined = Array.from(new Set([...defaultCategories, ...dbCategories])).filter(Boolean).sort();
+
     res.status(200).json({
       status: 'success',
-      data: { categories },
+      data: { categories: combined },
     });
   } catch (error) {
     next(error);

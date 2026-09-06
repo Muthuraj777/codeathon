@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { Student, Job, SkillGapResponse } from '../types/skillGap';
-import { skillGapApi, MOCK_STUDENTS, MOCK_JOBS } from '../services/skillGapApi';
+import { skillGapApi } from '../services/skillGapApi';
 
 interface SkillGapState {
   students: Student[];
@@ -18,10 +18,10 @@ interface SkillGapState {
 }
 
 export const useSkillGapStore = create<SkillGapState>((set, get) => ({
-  students: MOCK_STUDENTS,
-  jobs: MOCK_JOBS,
-  selectedStudentId: 'student-101',
-  selectedJobId: 'job-501',
+  students: [],
+  jobs: [],
+  selectedStudentId: '',
+  selectedJobId: '',
   analysisResult: null,
   isLoading: false,
   error: null,
@@ -44,11 +44,13 @@ export const useSkillGapStore = create<SkillGapState>((set, get) => ({
         skillGapApi.getJobs(),
       ]);
 
-      const students = fetchedStudents.length > 0 ? fetchedStudents : MOCK_STUDENTS;
-      const jobs = fetchedJobs.length > 0 ? fetchedJobs : MOCK_JOBS;
+      const students = fetchedStudents || [];
+      const jobs = fetchedJobs || [];
 
-      const initialStudentId = students[0]?.id || 'student-101';
-      const initialJobId = jobs[0]?.id || 'job-501';
+      const getEntityId = (item: any) => item?._id || item?.id || '';
+
+      const initialStudentId = students.length > 0 ? getEntityId(students[0]) : '';
+      const initialJobId = jobs.length > 0 ? getEntityId(jobs[0]) : '';
 
       set({
         students,
@@ -57,9 +59,13 @@ export const useSkillGapStore = create<SkillGapState>((set, get) => ({
         selectedJobId: initialJobId,
       });
 
-      await get().runAnalysis(initialStudentId, initialJobId);
-    } catch {
-      set({ error: 'Failed to load system data', isLoading: false });
+      if (initialStudentId && initialJobId) {
+        await get().runAnalysis(initialStudentId, initialJobId);
+      } else {
+        set({ isLoading: false, analysisResult: null });
+      }
+    } catch (err: any) {
+      set({ error: err.message || 'Failed to load system data', isLoading: false, analysisResult: null });
     }
   },
 
@@ -78,3 +84,4 @@ export const useSkillGapStore = create<SkillGapState>((set, get) => ({
     }
   },
 }));
+

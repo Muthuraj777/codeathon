@@ -22,7 +22,7 @@ interface SkillState {
 
 export const useSkillStore = create<SkillState>((set, get) => ({
   skills: [],
-  categories: ['All', 'Backend', 'Frontend', 'Database', 'Cloud', 'DevOps', 'Mobile', 'AI/ML', 'Other'],
+  categories: ['All'],
   selectedCategory: 'All',
   searchQuery: '',
   isLoading: false,

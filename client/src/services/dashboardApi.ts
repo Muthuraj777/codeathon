@@ -16,18 +16,17 @@ export const INITIAL_DASHBOARD_STATS: DashboardStats = {
 
 export const dashboardApi = {
   getStats: async (): Promise<DashboardStats> => {
-    try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-      const res = await fetch(`${API_BASE_URL}/dashboard/stats`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        credentials: 'include',
-      });
-      if (!res.ok) throw new Error(`Dashboard API error: ${res.status}`);
-      const data = await res.json();
-      return data.data || data;
-    } catch {
-      return INITIAL_DASHBOARD_STATS;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const res = await fetch(`${API_BASE_URL}/dashboard/stats`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      credentials: 'include',
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to load dashboard metrics (Status: ${res.status})`);
     }
+    const data = await res.json();
+    return data.data || data;
   },
 };
+
 
