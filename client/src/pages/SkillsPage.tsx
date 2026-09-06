@@ -62,10 +62,6 @@ export const SkillsPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-            <span>Technical Taxonomy Catalog</span>
-          </Badge>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight flex items-center gap-3">
             <Code2 className="h-7 w-7 text-[#2563EB]" />
             <span>Skills Directory</span>

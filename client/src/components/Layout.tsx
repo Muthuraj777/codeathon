@@ -82,25 +82,8 @@ export const Layout: React.FC = () => {
             </div>
           </div>
 
-          {/* Search Bar Trigger */}
-          <div
-            onClick={() => navigate('/skills')}
-            className="flex items-center justify-between px-3.5 py-2.5 bg-slate-100/80 border border-slate-200/80 rounded-xl text-xs text-slate-500 hover:border-slate-300 hover:text-slate-800 transition cursor-pointer shadow-2xs"
-          >
-            <div className="flex items-center gap-2">
-              <Search className="w-3.5 h-3.5" />
-              <span>Search skills...</span>
-            </div>
-            <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-white rounded border border-slate-200 text-slate-500">
-              ⌘K
-            </kbd>
-          </div>
-
           {/* Navigation Links Group */}
           <div className="space-y-1">
-            <p className="text-[10px] font-mono font-semibold uppercase text-slate-400 tracking-wider px-3 mb-2">
-              Navigation Menu
-            </p>
             <nav className="space-y-1">
               {navItems.map((item) => (
                 <NavLink
@@ -171,7 +154,7 @@ export const Layout: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-between pt-1">
-            <Badge variant={getRoleBadgeVariant(user?.role)} dot className="capitalize text-[10px] px-2 py-0.5">
+            <Badge variant={getRoleBadgeVariant(user?.role)}  className="capitalize text-[10px] px-2 py-0.5">
               {user?.role || 'User'}
             </Badge>
             <button
@@ -227,7 +210,7 @@ export const Layout: React.FC = () => {
                 <p className="text-[11px] text-slate-500">{user?.email}</p>
               </div>
             </div>
-            <Badge variant={getRoleBadgeVariant(user?.role)} dot className="capitalize text-[10px]">
+            <Badge variant={getRoleBadgeVariant(user?.role)}  className="capitalize text-[10px]">
               {user?.role}
             </Badge>
           </div>

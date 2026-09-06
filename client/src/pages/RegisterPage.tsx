@@ -9,7 +9,7 @@ import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
 import { GoogleLoginButton } from '../components/auth/GoogleLoginButton';
-import { UserPlus, GraduationCap, UserCheck, ShieldCheck, Sparkles, CheckCircle, Mail, Lock, User } from 'lucide-react';
+import { UserPlus, GraduationCap, UserCheck, CheckCircle, Mail, Lock, User } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
   const { registerUser, isLoading, error, clearError } = useAuthStore();
@@ -55,7 +55,6 @@ export const RegisterPage: React.FC = () => {
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0F172A] flex items-center justify-center gap-2">
             <span>Create Account</span>
-            <Sparkles className="w-4 h-4 text-blue-600" />
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
             Join the platform &amp; unlock AI competency gap insights.
@@ -89,11 +88,10 @@ export const RegisterPage: React.FC = () => {
                 <label className="block text-xs font-medium text-slate-700 mb-2">
                   Select Workspace Role
                 </label>
-                <div className="grid grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5">
                   {[
                     { id: 'student', label: 'Student', icon: GraduationCap },
                     { id: 'employee', label: 'Employee', icon: UserCheck },
-                    { id: 'admin', label: 'Admin', icon: ShieldCheck },
                   ].map((roleItem) => {
                     const RoleIcon = roleItem.icon;
                     const isSelected = selectedRole === roleItem.id;

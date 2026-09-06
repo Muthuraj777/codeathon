@@ -81,15 +81,6 @@ export const DashboardPage: React.FC = () => {
             <div className="absolute right-1/3 -top-10 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="neutral" dot className="px-3 py-1 font-medium text-xs bg-white/15 text-white border-white/25">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-200" />
-                  <span>AI Competency Intelligence Engine</span>
-                </Badge>
-                <Badge variant="neutral" className="text-[10px] font-mono bg-black/20 text-white/90 border-white/20">
-                  Live Stream
-                </Badge>
-              </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
                 Enterprise Talent <br />
@@ -112,9 +103,9 @@ export const DashboardPage: React.FC = () => {
                 </Button>
               </Link>
               <Link to="/jobs">
-                <Button variant="outline" size="lg" className="gap-2 border-white/30 text-white hover:bg-white/10">
-                  <Compass className="w-4 h-4 text-blue-200" />
-                  <span>Explore Role Benchmarks</span>
+                <Button variant="outline" size="lg" className="gap-2 border-white/30 text-white hover:bg-blue-50">
+                  <Compass className="w-4 h-4 text-blue-600" />
+                  <span className='text-blue-600'>Explore Role Benchmarks</span>
                 </Button>
               </Link>
             </div>
@@ -222,9 +213,7 @@ export const DashboardPage: React.FC = () => {
               Live updates from candidate submissions and role competency evaluations
             </CardDescription>
           </div>
-          <Badge variant="primary" dot className="text-[10px] font-mono">
-            Live Timeline
-          </Badge>
+          
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

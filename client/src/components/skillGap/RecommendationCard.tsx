@@ -52,7 +52,7 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({ recommen
             >
               <div className="space-y-1.5 flex-1">
                 <div className="flex items-center gap-2">
-                  <Badge variant={getPriorityBadgeVariant(rec.priority)} dot className="uppercase text-[10px] font-mono">
+                  <Badge variant={getPriorityBadgeVariant(rec.priority)}  className="uppercase text-[10px] font-mono">
                     {rec.priority} Priority
                   </Badge>
                   <h4 className="font-semibold text-slate-900 text-sm">{rec.skillName}</h4>

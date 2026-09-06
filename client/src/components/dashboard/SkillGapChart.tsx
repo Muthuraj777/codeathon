@@ -28,9 +28,6 @@ export const SkillGapChart: React.FC<SkillGapChartProps> = ({ topSkillGaps }) =>
             Organization-wide frequency breakdown of missing competencies across active candidate pools
           </CardDescription>
         </div>
-        <Badge variant="purple" dot className="text-[10px] font-mono hidden sm:flex">
-          <Activity className="w-3 h-3 text-purple-600 mr-1" /> Live Frequency
-        </Badge>
       </CardHeader>
       <CardContent className="space-y-4 pt-5">
         {topSkillGaps.length === 0 ? (

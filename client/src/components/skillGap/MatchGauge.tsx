@@ -28,9 +28,6 @@ export const MatchGauge: React.FC<MatchGaugeProps> = ({ score, matchedCount, tot
         <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
           <Target className="w-3.5 h-3.5 text-[#2563EB]" /> Overall Job Readiness Rating
         </span>
-        <Badge variant="primary" dot className="text-[10px] font-mono">
-          AI Evaluated
-        </Badge>
       </div>
 
       {/* SVG Ring Gauge */}

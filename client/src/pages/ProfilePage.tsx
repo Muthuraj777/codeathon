@@ -86,9 +86,6 @@ export const ProfilePage: React.FC = () => {
           <div className="space-y-1.5 text-center sm:text-left flex-1">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
               <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">{user?.name || currentStudent?.name || 'Arun'}</h1>
-              <Badge variant="primary" dot className="capitalize font-mono">
-                {user?.role || 'Student'}
-              </Badge>
             </div>
             <p className="text-xs sm:text-sm font-medium text-blue-600 flex items-center justify-center sm:justify-start gap-1">
               <UserCheck className="w-4 h-4 text-blue-600" />

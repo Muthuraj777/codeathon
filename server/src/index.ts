@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
+import { seedAdminUser } from './config/seedAdmin.js';
 import authRoutes from './routes/authRoutes.js';
 import skillRoutes from './routes/skillRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
@@ -21,8 +22,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB & Seed Single Admin
+connectDB().then(() => {
+  seedAdminUser();
+});
 
 // Performance & Security Middleware
 app.use(responseTimeTracker);

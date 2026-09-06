@@ -8,9 +8,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { Alert } from '../components/ui/Alert';
-import { Badge } from '../components/ui/Badge';
 import { GoogleLoginButton } from '../components/auth/GoogleLoginButton';
-import { LogIn, GraduationCap, Sparkles, ShieldCheck, Lock, Mail, CheckCircle2 } from 'lucide-react';
+import { LogIn, GraduationCap, ShieldCheck, Lock, Mail, CheckCircle2 } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login, isLoading, error, clearError } = useAuthStore();
@@ -56,9 +55,7 @@ export const LoginPage: React.FC = () => {
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 animate-fade-in">
         {/* Left Side: Bento Feature Hero (Desktop) */}
         <div className="lg:col-span-6 space-y-6 text-left hidden lg:block">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" /> Competency Intelligence Engine
-          </div>
+         
 
           <h1 className="text-4xl font-extrabold tracking-tight text-[#0F172A] leading-tight">
             Map skills, bridge gaps, <br />
@@ -97,15 +94,12 @@ export const LoginPage: React.FC = () => {
             </h1>
           </div>
 
-          <Card className="glass-bento text-[#0F172A] shadow-xl">
+          <Card className="glass-bento text-[#0F172A] shadow-xl text-center">
             <CardHeader className="space-y-1">
               <CardTitle className="text-xl text-slate-900 flex items-center justify-between">
                 <span>Sign In</span>
-                <Badge variant="primary" dot className="text-[10px] font-mono">
-                  Enterprise
-                </Badge>
               </CardTitle>
-              <CardDescription className="text-slate-500 text-xs">
+              <CardDescription className="text-slate-500 text-xs text-center">
                 Enter credentials to access your talent workspace
               </CardDescription>
             </CardHeader>

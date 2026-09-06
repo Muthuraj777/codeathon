@@ -50,10 +50,6 @@ export const SkillGapPage: React.FC = () => {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <Badge variant="primary" dot className="px-3 py-1 font-medium text-xs mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-            <span>AI Competency Gap Engine</span>
-          </Badge>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight flex items-center gap-3">
             <Target className="w-7 h-7 text-[#2563EB]" />
             <span>Competency Gap Analysis</span>
