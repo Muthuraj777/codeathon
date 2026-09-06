@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/Card';
-import { Badge } from '../ui/Badge';
-import { AlertTriangle, Activity, BarChart2 } from 'lucide-react';
+import { AlertTriangle, BarChart2 } from 'lucide-react';
 
 interface SkillGapChartProps {
   topSkillGaps: Array<{

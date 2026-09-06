@@ -18,7 +18,6 @@ import {
   CheckCircle2,
   XCircle,
   Loader2,
-  Sparkles,
   Target,
   Search,
   X,

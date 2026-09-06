@@ -14,7 +14,6 @@ import {
   GraduationCap,
   Code2,
   ShieldCheck,
-  Search,
   Bell,
   CheckCircle2,
 } from 'lucide-react';
@@ -60,7 +59,7 @@ export const Layout: React.FC = () => {
       <div className="fixed bottom-10 left-10 w-[450px] h-[450px] bg-blob-purple pointer-events-none z-0 opacity-40" />
 
       {/* Desktop Left Sidebar Navigation (21st.dev Style) */}
-      <aside className="hidden lg:flex flex-col w-64 xl:w-72 bg-white/80 backdrop-blur-2xl border-r border-slate-200/80 sticky top-0 h-screen z-30 shadow-2xs select-none">
+      <aside className="hidden lg:flex flex-col w-64 xl:w-72 bg-white/80 backdrop-blur-2xl border-r border-slate-200/80 fixed top-0 left-0 h-screen z-30 shadow-2xs select-none">
         <div className="p-5 flex flex-col space-y-6 flex-1 overflow-y-auto">
           {/* Brand Header */}
           <div
@@ -244,7 +243,7 @@ export const Layout: React.FC = () => {
       )}
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden lg:pl-64 xl:pl-72">
         <main className="flex-1 p-4 sm:p-6 lg:p-8 z-10 max-w-7xl w-full mx-auto">
           <Outlet />
         </main>

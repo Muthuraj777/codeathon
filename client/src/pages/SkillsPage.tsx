@@ -6,7 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Input } from '../components/ui/Input';
 import { Alert } from '../components/ui/Alert';
-import { Plus, Search, Filter, Trash2, Edit2, Code2, Sparkles, Layers } from 'lucide-react';
+import { Plus, Search, Filter, Trash2, Edit2, Code2, Layers } from 'lucide-react';
 
 export const SkillsPage: React.FC = () => {
   const {

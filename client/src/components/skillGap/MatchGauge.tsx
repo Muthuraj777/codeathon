@@ -1,6 +1,5 @@
 import React from 'react';
 import { Sparkles, CheckCircle2, Target } from 'lucide-react';
-import { Badge } from '../ui/Badge';
 
 interface MatchGaugeProps {
   score: number; // 0 to 100

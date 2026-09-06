@@ -6,7 +6,7 @@ import { Card, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Alert } from '../components/ui/Alert';
 import { Spinner } from '../components/ui/Spinner';
-import { FileCheck, Building2, User, Clock, Sparkles } from 'lucide-react';
+import { FileCheck, Building2, User, Clock } from 'lucide-react';
 
 export const ApplicationsPage: React.FC = () => {
   const { user } = useAuthStore();
