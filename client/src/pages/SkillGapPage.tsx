@@ -39,8 +39,10 @@ export const SkillGapPage: React.FC = () => {
   }
 
   const getItemId = (item: any) => item?._id || item?.id || '';
+  const safeStudents = Array.isArray(students) ? students : [];
+  const safeJobs = Array.isArray(jobs) ? jobs : [];
 
-  const selectedJob = jobs.find((j) => getItemId(j) === selectedJobId) || {
+  const selectedJob = safeJobs.find((j) => getItemId(j) === selectedJobId) || {
     id: selectedJobId,
     title: analysisResult?.jobTitle || 'Target Position',
     company: 'Organization',
@@ -85,13 +87,13 @@ export const SkillGapPage: React.FC = () => {
           <select
             value={selectedStudentId}
             onChange={(e) => setSelectedStudentId(e.target.value)}
-            disabled={students.length === 0}
+            disabled={safeStudents.length === 0}
             className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer disabled:opacity-50"
           >
-            {students.length === 0 ? (
+            {safeStudents.length === 0 ? (
               <option value="">No candidates available</option>
             ) : (
-              students.map((s) => {
+              safeStudents.map((s) => {
                 const sId = getItemId(s);
                 return (
                   <option key={sId} value={sId} className="bg-white text-slate-900">
@@ -111,13 +113,13 @@ export const SkillGapPage: React.FC = () => {
           <select
             value={selectedJobId}
             onChange={(e) => setSelectedJobId(e.target.value)}
-            disabled={jobs.length === 0}
+            disabled={safeJobs.length === 0}
             className="w-full px-4 py-3 glass-input rounded-2xl text-xs sm:text-sm font-medium text-slate-900 focus:outline-none transition cursor-pointer disabled:opacity-50"
           >
-            {jobs.length === 0 ? (
+            {safeJobs.length === 0 ? (
               <option value="">No job benchmarks available</option>
             ) : (
-              jobs.map((j) => {
+              safeJobs.map((j) => {
                 const jId = getItemId(j);
                 return (
                   <option key={jId} value={jId} className="bg-white text-slate-900">
