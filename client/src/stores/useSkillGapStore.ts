@@ -44,8 +44,8 @@ export const useSkillGapStore = create<SkillGapState>((set, get) => ({
         skillGapApi.getJobs(),
       ]);
 
-      const students = fetchedStudents || [];
-      const jobs = fetchedJobs || [];
+      const students = Array.isArray(fetchedStudents) ? fetchedStudents : [];
+      const jobs = Array.isArray(fetchedJobs) ? fetchedJobs : [];
 
       const getEntityId = (item: any) => item?._id || item?.id || '';
 

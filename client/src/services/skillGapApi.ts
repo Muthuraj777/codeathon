@@ -20,7 +20,11 @@ export const skillGapApi = {
       throw new Error(`Failed to fetch students (Status: ${res.status})`);
     }
     const data = await res.json();
-    return data.data || data || [];
+    if (Array.isArray(data.data?.students)) return data.data.students;
+    if (Array.isArray(data.data)) return data.data;
+    if (Array.isArray(data.students)) return data.students;
+    if (Array.isArray(data)) return data;
+    return [];
   },
 
   getJobs: async (): Promise<Job[]> => {
@@ -32,7 +36,11 @@ export const skillGapApi = {
       throw new Error(`Failed to fetch jobs (Status: ${res.status})`);
     }
     const data = await res.json();
-    return data.data || data || [];
+    if (Array.isArray(data.data?.jobs)) return data.data.jobs;
+    if (Array.isArray(data.data)) return data.data;
+    if (Array.isArray(data.jobs)) return data.jobs;
+    if (Array.isArray(data)) return data;
+    return [];
   },
 
   getSkillGap: async (studentId: string, jobId: string): Promise<SkillGapResponse['data']> => {
